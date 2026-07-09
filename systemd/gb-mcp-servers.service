@@ -1,8 +1,0 @@
-[Unit]
-Description=GB AI Brain — Install & deploy MCP servers to all agents
-
-[Service]
-Type=oneshot
-ExecStart=%h/.local/bin/install-mcp-servers
-StandardOutput=journal
-StandardError=journal

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# install-systemd.sh — Install GB AI Brain systemd user services and timers
+# install-systemd.sh — Install AI Toolkit systemd user services and timers
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"

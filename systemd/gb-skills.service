@@ -1,8 +1,0 @@
-[Unit]
-Description=GB AI Brain — Install skills
-
-[Service]
-Type=oneshot
-ExecStart=%h/.local/bin/install-skills
-StandardOutput=journal
-StandardError=journal
