@@ -2,6 +2,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Dict, List
 
+from ai_toolkit.install_mcp_servers.models.mcp_server_def import McpServerDef
 from ai_toolkit.install_mcp_servers.config_loader import ConfigLoader
 from ai_toolkit.install_mcp_servers.config_paths import ConfigPaths
 from ai_toolkit.install_mcp_servers.env_override_applier import EnvOverrideApplier

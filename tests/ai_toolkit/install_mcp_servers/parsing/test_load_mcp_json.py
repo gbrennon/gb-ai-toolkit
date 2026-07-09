@@ -2,7 +2,6 @@ from pathlib import Path
 
 import pytest
 
-from ai_toolkit.install_mcp_servers.models.mcp_server_def import McpServerDef
 from ai_toolkit.install_mcp_servers.parsing.load_mcp_json import load_mcp_json
 
 

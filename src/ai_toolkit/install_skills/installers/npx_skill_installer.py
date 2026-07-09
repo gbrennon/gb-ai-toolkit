@@ -1,5 +1,4 @@
 from ai_toolkit.install_skills.models.skill_def import SkillDef
-from ai_toolkit.install_skills.installers.skill_installer import SkillInstaller
 from ai_toolkit.shared_kernel.shell import run_command
 
 

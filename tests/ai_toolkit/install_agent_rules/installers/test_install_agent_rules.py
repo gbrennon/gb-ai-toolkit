@@ -10,7 +10,6 @@ from ai_toolkit.install_agent_rules.parsing.compose_rules import (
     compose_rules_to_file,
 )
 from ai_toolkit.install_agent_rules.parsing.load_rules_dir import (
-    load_rules_entries,
     read_rules_dir,
 )
 
