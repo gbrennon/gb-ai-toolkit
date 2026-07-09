@@ -109,7 +109,7 @@ uv run install-mcp-servers
 
 # Custom paths
 uv run python -c "
-from gb_ai_brain.install_mcp_servers.main import main
+from ai_toolkit.install_mcp_servers.main import main
 main(mcp_json_path='path/to/mcp.json', dotenv_path='.env.prod')
 "
 ```

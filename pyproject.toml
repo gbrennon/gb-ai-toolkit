@@ -1,5 +1,5 @@
 [project]
-name = "gb-ai-brain"
+name = "ai-toolkit"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
@@ -19,9 +19,10 @@ dev = [
 ]
 
 [project.scripts]
-gb-ai-brain = "gb_ai_brain:main"
-install-skills = "gb_ai_brain.install_skills.main:main"
-install-mcp-servers = "gb_ai_brain.install_mcp_servers.main:main"
+ai-toolkit = "ai_toolkit:main"
+install-skills = "ai_toolkit.install_skills.main:main"
+install-mcp-servers = "ai_toolkit.install_mcp_servers.main:main"
+install-pi-config = "ai_toolkit.install_pi_config.main:main"
 
 [tool.coverage.run]
 omit = [
@@ -45,7 +46,7 @@ exclude_also = [
 addopts = [
     "--strict-markers",
     "--strict-config",
-    "--cov=gb_ai_brain",
+    "--cov=ai_toolkit",
     "--cov-report=term-missing",
     "--cov-fail-under=80",
 ]

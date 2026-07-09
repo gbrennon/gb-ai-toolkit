@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+# install-aliases.sh — Install shell aliases for AI Toolkit commands
+set -euo pipefail
+
+ALIAS_FILE="${HOME}/.ai-toolkit-aliases"
+
+cat > "$ALIAS_FILE" << 'EOF'
+# AI Toolkit — shell aliases
+# Source this file in your .bashrc / .zshrc:
+#   [ -f ~/.ai-toolkit-aliases ] && source ~/.ai-toolkit-aliases
+
+alias ai-mcp='install-mcp-servers'
+alias ai-skills='install-skills'
+alias ai-tookit='ai-toolkit'
+
+# systemd user service shortcuts
+alias ai-mcp-status='systemctl --user status ai-mcp-servers.service'
+alias ai-mcp-run='systemctl --user start ai-mcp-servers.service'
+alias ai-skills-status='systemctl --user status ai-skills.service'
+alias ai-skills-run='systemctl --user start ai-skills.service'
+alias ai-timers='systemctl --user list-timers "ai-*"'
+EOF
+
+echo "Aliases written to $ALIAS_FILE"
+echo ""
+echo "To activate, add this line to your shell rc file:"
+echo "  [ -f ~/.ai-toolkit-aliases ] && source ~/.ai-toolkit-aliases"
