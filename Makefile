@@ -1,4 +1,4 @@
-.PHONY: setup install-mcp install-skills install test test-unit deploy-mcp clean help \
+.PHONY: setup install-mcp install-skills install-pi-config install test test-unit deploy-mcp clean help \
         install-systemd uninstall-systemd install-aliases
 
 PYTHON      := .venv/bin/python
@@ -23,6 +23,12 @@ install-skills:
 	$(UV) run install-skills
 
 install: install-mcp install-skills
+
+# -------------------------------------------------------------------
+# Pi Config
+# -------------------------------------------------------------------
+install-pi-config:
+	$(UV) run install-pi-config
 
 # -------------------------------------------------------------------
 # Deploy
@@ -74,6 +80,7 @@ help:
 	@echo "  install-mcp       Install & deploy MCP servers (dev mode — uv run)"
 	@echo "  install-skills    Install skills (dev mode — uv run)"
 	@echo "  install           Install everything (mcp + skills)"
+	@echo "  install-pi-config Sync CLINE_API_KEY from .env to Pi's auth.json"
 	@echo "  deploy-mcp        Same as install-mcp"
 	@echo "  install-systemd   Install systemd user services & timers (installed mode)"
 	@echo "  uninstall-systemd Remove systemd user services & timers"

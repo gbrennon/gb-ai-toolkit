@@ -5,7 +5,7 @@ This guide walks through adding support for a new agent (e.g., "Claude Code",
 
 ## Step 1: Add to `AgentPlatform` enum
 
-**File:** `src/gb_ai_brain/install_mcp_servers/models/agent_platform.py`
+**File:** `src/ai_toolkit/install_mcp_servers/models/agent_platform.py`
 
 ```python
 class AgentPlatform(StrEnum):
@@ -29,7 +29,7 @@ The value (`"my-agent"`) must match the `"platform"` string used in `mcp/mcp.jso
 
 ## Step 2: Create an installer
 
-**File:** `src/gb_ai_brain/install_mcp_servers/installers/my_agent_installer.py`
+**File:** `src/ai_toolkit/install_mcp_servers/installers/my_agent_installer.py`
 
 Use `opencode_installer.py` as a template. The class needs:
 
@@ -40,9 +40,9 @@ Use `opencode_installer.py` as a template. The class needs:
 ```python
 import subprocess
 
-from gb_ai_brain.install_mcp_servers.models.agent_platform import AgentPlatform
-from gb_ai_brain.install_mcp_servers.models.mcp_server_def import McpServerDef
-from gb_ai_brain.shared_kernel.shell import shell_command_exists
+from ai_toolkit.install_mcp_servers.models.agent_platform import AgentPlatform
+from ai_toolkit.install_mcp_servers.models.mcp_server_def import McpServerDef
+from ai_toolkit.shared_kernel.shell import shell_command_exists
 
 
 class MyAgentMcpInstaller:
@@ -83,14 +83,14 @@ class MyAgentMcpInstaller:
 
 ## Step 3: Wire into `main.py`
 
-**File:** `src/gb_ai_brain/install_mcp_servers/main.py`
+**File:** `src/ai_toolkit/install_mcp_servers/main.py`
 
 1. Import your installer
 2. Instantiate it
 3. Pass it to `install_mcp()`
 
 ```python
-from gb_ai_brain.install_mcp_servers.installers.my_agent_installer import (
+from ai_toolkit.install_mcp_servers.installers.my_agent_installer import (
     MyAgentMcpInstaller,
 )
 # ...
@@ -111,7 +111,7 @@ from gb_ai_brain.install_mcp_servers.installers.my_agent_installer import (
 
 ## Step 4: Wire into `install_mcp.py`
 
-**File:** `src/gb_ai_brain/install_mcp_servers/installers/install_mcp.py`
+**File:** `src/ai_toolkit/install_mcp_servers/installers/install_mcp.py`
 
 Add the parameter and the routing branch:
 
