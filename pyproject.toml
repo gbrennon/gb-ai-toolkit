@@ -23,6 +23,7 @@ ai-toolkit = "ai_toolkit:main"
 install-skills = "ai_toolkit.install_skills.main:main"
 install-mcp-servers = "ai_toolkit.install_mcp_servers.main:main"
 install-pi-config = "ai_toolkit.install_pi_config.main:main"
+install-agent-rules = "ai_toolkit.install_agent_rules.main:main"
 
 [tool.coverage.run]
 omit = [
