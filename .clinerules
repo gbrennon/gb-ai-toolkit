@@ -1,0 +1,150 @@
+# ai-toolkit — Agent Instructions
+
+You are an autonomous coding agent with access to:
+- **Taskwarrior 3.4.1** (`task` CLI) for task management
+- **Skills** in `~/.agents/skills/` that teach you HOW to do things
+- **MCP servers** including GitHub API for issue tracking
+
+## Project Context: forging-blocks
+
+This project manages the **forging-blocks** Python library — a hexagonal architecture toolkit providing Foundation (Result, ValueObject, Port), Domain (Entity, AggregateRoot), Application (UseCase, MessageHandler), and Infrastructure (Repository, EventStore) building blocks.
+
+- **Repo**: `github.com/forging-blocks-org/forging-blocks`
+- **Language**: Python 3.14+ (PEP 695 generics, `| None`)
+- **Architecture**: Hexagonal (Ports & Adapters) — Foundation → Domain → Application → Infrastructure
+- **Test framework**: pytest with `unit`, `integration`, `e2e` markers
+- **Tooling**: Ruff (line-length 100), Pyright (strict), Coverage (≥90%)
+
+## Autonomous Behavior
+
+You should run commands proactively without asking for permission. Here's how to use your capabilities.
+
+### Automatic Check-In on Startup
+
+Whenever you start working in this project, **automatically check the task list** before doing anything else:
+
+```bash
+task next                         # Most urgent tasks
+task project:forging-blocks list  # All forging-blocks tasks
+task overdue                      # Past-due items
+```
+
+Report to the user what you found: pending count, highest-priority items, any overdue tasks.
+
+### What Should I Work On Next?
+
+When the user asks what to do next, or you need to decide priority:
+
+```bash
+task project:forging-blocks /priority:p0:critical/ list   # Blockers
+task project:forging-blocks /priority:p1:high/ list        # High priority
+task project:forging-blocks /priority:p2:medium/ list      # Medium priority
+task project:forging-blocks /priority:p3:low/ list         # Low priority
+task project:forging-blocks /phase:1:core-completeness/ list
+task project:forging-blocks /phase:2:developer-experience/ list
+task project:forging-blocks /phase:3:plugin-ecosystem/ list
+task /v0\.4\.0/ list
+task /v0\.5\.0/ list
+task /v0\.6\.0/ list
+task /v1\.0\.0/ list
+```
+
+**Note**: Priority/phase/epic values are embedded in the task description as text (e.g. `+priority:p1:high`), not real Taskwarrior tags. Use `/regex/` search to filter by them, not `+tag` syntax.
+
+**Priority order**: `p0:critical` → `p1:high` → `p2:medium` → `p3:low`
+**Version order**: `v0.4.0` → `v0.5.0` → `v0.6.0` → `v1.0.0`
+**Phase order**: `phase:1` (core-completeness) → `phase:2` (developer-experience) → `phase:3` (plugin-ecosystem)
+
+### Completing a Task
+
+When you finish work on a task:
+1. Annotate what was done with code references: `task <id> annotate "Implemented X in src/forging_blocks/Y.py"`
+2. Complete it: `task <id> done`
+3. Check the next-highest-priority task and suggest it as the next step
+
+### Forging-Blocks Task Structure
+
+Tasks use embedded metadata in the description. These are **description text**, not real Taskwarrior tags:
+
+```
+v<version> Task <epic.task>: <title>
++epic:<epic_number>.<item>:<name>
++phase:<phase_number>:<name>
++priority:p<priority_level>:<name>
+```
+
+Example: `v0.4.0 Task 1.4.1: HTTP Adapters + REST API Infrastructure +epic:1.4:infrastructure +phase:1:core-completeness +priority:p1:high`
+
+**Important**: Because these look like tags but are actually description text, use `/regex/` substitution to modify them, not `+tag`/`-tag` syntax (see `taskwarrior-modify` skill).
+
+### Task Management (via Taskwarrior)
+
+You have 11 Taskwarrior skills installed. Invoke them by their name when the context matches:
+
+| Skill Name | When to Use It |
+|---|---|
+| `taskwarrior` | Any task management conversation — this is the main skill |
+| `taskwarrior-add` | Creating new tasks |
+| `taskwarrior-list` | Listing/filtering tasks |
+| `taskwarrior-done` | Completing tasks |
+| `taskwarrior-modify` | Changing task attributes |
+| `taskwarrior-start-stop` | Tracking work sessions |
+| `taskwarrior-delete` | Deleting/removing tasks |
+| `taskwarrior-annotate` | Adding notes to tasks |
+| `taskwarrior-config` | Changing configuration |
+| `taskwarrior-setup` | First-time initialization |
+| `taskwarrior-sync` | Export/import/sync |
+
+You run `task` commands directly — do NOT ask the user for confirmation.
+
+### GitHub Issue Integration (cross-reference workflow)
+
+**Default repo**: `forging-blocks-org/forging-blocks`
+
+When the user asks to verify if tasks are still relevant, or to cross-reference tasks with GitHub issues:
+
+1. **List tasks**: `task list` / `task next` / `task project:forging-blocks`
+2. **For each task, extract issue references**: Look for patterns like `#123`, `forging-blocks-org/forging-blocks#42`, or GitHub URLs in the description or annotations
+3. **Check issue status via GitHub MCP**: Use the `github` MCP server to fetch issue state (open/closed) from `forging-blocks-org/forging-blocks`
+4. **Update the task**:
+   - If issue is **closed** → `task <id> annotate "Issue #123 is closed, task may need review"` then optionally `task <id> done`
+   - If issue is still **open** → `task <id> annotate "Issue #123 still open, task is still relevant"`
+   - If no issue reference found → `task <id> annotate "No GitHub issue reference found in description"`
+
+### Project Context Skills
+
+Beyond taskwarrior, you have 80+ skills in `~/.agents/skills/`. Key ones for this project:
+
+| Skill | When to Use |
+|---|---|
+| `forging-blocks-maintenance` | **Writing any code/tests** — imports, type annotations, docstrings, naming, test conventions, code patterns |
+| `forging-blocks-foundation` | Defining shared abstractions — Result, ValueObject, Port, Mapper, Specifications, Messages, Errors |
+| `forging-blocks-domain` | Modeling problem-space concepts — Entity, AggregateRoot, ValueObject, domain errors |
+| `forging-blocks-application` | Defining system behavior — UseCase, MessageHandler, inbound/outbound Ports, Repository, UnitOfWork |
+| `clean-architecture` | Designing layer boundaries |
+| `hexagonal-architecture` | Port/adapter patterns |
+| `tdd` / `test-driven-development` | Writing tests first |
+| `diagnosing-bugs` | Debugging failures |
+| `codebase-design` | Architecture decisions |
+| `domain-modeling` | Domain logic decisions |
+| `caveman-review` | Code reviews |
+| `grill-with-docs` | Research with web docs |
+
+### Invoking Skills
+
+You invoke skills by embedding their guidance in your response. The skills are loaded from `~/.agents/skills/<name>/SKILL.md`. When a situation matches a skill's purpose:
+1. Load the skill file to get detailed instructions
+2. Apply those instructions to the current task
+3. Execute commands directly
+
+### Available Tools
+
+- `task` CLI — full taskwarrior command line
+- GitHub MCP — read issues, PRs, repos (default: `forging-blocks-org/forging-blocks`)
+- `fetch` MCP — fetch web documentation
+- `playwright` — browser automation for E2E tests
+- `sequential-thinking` — break down complex problems
+- `memory` — store/retrieve context across conversations
+- `read_files` — read project files
+- `search_codebase` — search for patterns
+- `run_commands` — execute shell commands

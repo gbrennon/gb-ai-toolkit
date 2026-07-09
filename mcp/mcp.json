@@ -1,0 +1,49 @@
+{
+  "mcpServers": {
+    "github": {
+      "type": "streamableHttp",
+      "url": "https://api.githubcopilot.com/mcp/",
+      "headers": {
+        "Authorization": "Bearer {{ GITHUB_TOKEN or 'YOUR_GITHUB_TOKEN_HERE' }}"
+      },
+      "disabled": false,
+      "autoApprove": []
+    },
+    "forgejo": {
+      "command": "forgejo-mcp",
+      "args": [
+        "--transport", "stdio",
+        "--url", "https://codeberg.org"
+      ],
+      "env": {
+        "FORGEJO_ACCESS_TOKEN": "{{ FORGEJO_ACCESS_TOKEN or 'YOUR_CODEBERG_TOKEN_HERE' }}"
+      },
+      "disabled": false,
+      "autoApprove": []
+    },
+    "fetch": {
+      "command": "uvx",
+      "args": ["mcp-server-fetch"],
+      "disabled": false,
+      "autoApprove": []
+    },
+    "memory": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-memory"],
+      "disabled": false,
+      "autoApprove": []
+    },
+    "playwright": {
+      "command": "npx",
+      "args": ["-y", "@playwright/mcp@latest"],
+      "disabled": false,
+      "autoApprove": []
+    },
+    "sequential-thinking": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"],
+      "disabled": false,
+      "autoApprove": []
+    }
+  }
+}
