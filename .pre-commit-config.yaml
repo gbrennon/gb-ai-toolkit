@@ -6,10 +6,13 @@ repos:
         args: [--fix]
       - id: ruff-format
 
-  - repo: https://github.com/RobertCraigie/pyright-python
-    rev: v1.1.408
+  - repo: local
     hooks:
       - id: pyright
+        name: pyright
+        entry: uv run pyright
+        language: system
+        types: [python]
         args: [--pythonversion, "3.14"]
 
   - repo: local
@@ -19,6 +22,7 @@ repos:
         entry: uv run pytest --tb=short -q -m "unit or integration"
         language: system
         types: [python]
+        pass_filenames: false
         stages: [pre-commit]
 
       - id: pytest-e2e
