@@ -47,9 +47,7 @@ class TestReadRulesDir:
 
 class TestInstallAgentRules:
     @pytest.mark.integration
-    def test_install_when_rules_exist_then_returns_zero(
-        self, tmp_path: Path
-    ) -> None:
+    def test_install_when_rules_exist_then_returns_zero(self, tmp_path: Path) -> None:
         rules_dir = tmp_path / "rules.d"
         rules_dir.mkdir()
         (rules_dir / "00-base.md").write_text("# Base")

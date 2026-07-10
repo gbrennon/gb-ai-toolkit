@@ -9,5 +9,14 @@ class NpxSkillInstaller:
     def install(self, skill: SkillDef) -> bool:
         print(f"Installing {skill.name} from {skill.source}")
         return run_command(
-            [self._npx_command, "skills", "add", skill.source, "--skill", skill.name, "-g", "-y"]
+            [
+                self._npx_command,
+                "skills",
+                "add",
+                skill.source,
+                "--skill",
+                skill.name,
+                "-g",
+                "-y",
+            ]
         )

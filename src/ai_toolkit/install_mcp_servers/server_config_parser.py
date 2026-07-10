@@ -14,16 +14,15 @@ class ServerConfigParser:
         result: List[McpServerDef] = []
 
         for name, cfg in servers_data.items():
-            result.append(McpServerDef(
-                name=str(name),
-                command=cfg.get("command"),
-                args=tuple(cfg.get("args", [])),
-                env=tuple(
-                    (str(k), str(v))
-                    for k, v in cfg.get("env", {}).items()
-                ),
-                server_type=cfg.get("type"),
-                url=cfg.get("url"),
-                disabled=cfg.get("disabled", False),
-            ))
+            result.append(
+                McpServerDef(
+                    name=str(name),
+                    command=cfg.get("command"),
+                    args=tuple(cfg.get("args", [])),
+                    env=tuple((str(k), str(v)) for k, v in cfg.get("env", {}).items()),
+                    server_type=cfg.get("type"),
+                    url=cfg.get("url"),
+                    disabled=cfg.get("disabled", False),
+                )
+            )
         return result

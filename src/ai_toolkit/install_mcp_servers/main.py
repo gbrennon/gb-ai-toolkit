@@ -31,7 +31,9 @@ from ai_toolkit.install_mcp_servers.parsing.deploy_mcp import (
 )
 from ai_toolkit.install_mcp_servers.secrets import check_mcp_secrets
 
-_DEFAULT_TARGET = Path.home() / ".cline" / "data" / "settings" / "cline_mcp_settings.json"
+_DEFAULT_TARGET = (
+    Path.home() / ".cline" / "data" / "settings" / "cline_mcp_settings.json"
+)
 
 
 def _build_agent_targets() -> dict[AgentPlatform, Path]:
@@ -89,12 +91,17 @@ def main(
         return 1
 
     if missing_keys:
-        print(f"\nAll commands found for platform {platform}, but secrets are missing (see above)")
+        print(
+            f"\nAll commands found for platform {platform}, but secrets are missing (see above)"
+        )
 
     agent_targets = _build_agent_targets()
 
     deployed = deploy_mcp(
-        mcp_json, target, dotenv_path=dotenv, agent_targets=agent_targets,
+        mcp_json,
+        target,
+        dotenv_path=dotenv,
+        agent_targets=agent_targets,
     )
     if not deployed:
         print(f"\nFailed to deploy MCP config to {target} for platform {platform}")

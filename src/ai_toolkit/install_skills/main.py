@@ -4,7 +4,9 @@ from pathlib import Path
 from ai_toolkit.shared_kernel.shell import shell_command_exists
 from ai_toolkit.install_skills.installers.skill_installer import SkillInstaller
 from ai_toolkit.install_skills.installers.npx_skill_installer import NpxSkillInstaller
-from ai_toolkit.install_skills.installers.local_skill_installer import LocalSkillInstaller
+from ai_toolkit.install_skills.installers.local_skill_installer import (
+    LocalSkillInstaller,
+)
 from ai_toolkit.install_skills.installers.update_skills import update_skills
 from ai_toolkit.install_skills.installers.install_skills import (
     install_remote_skills,

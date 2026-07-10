@@ -111,4 +111,3 @@ task undo                                         # Undo last action
 - **Always run commands without asking**: You are autonomous, just execute
 - **⚠️ Modify + bare text pitfall**: Never pass bare text (like `-code-review`) to `modify` — it will replace the entire description. Use `/syntax/` regex substitutions instead.
 - **Tags in description are just text**: If your task descriptions contain `+tag-like-text`, those are NOT actual Taskwarrior tags. `modify -tag` operates on real tags, not description text.
-

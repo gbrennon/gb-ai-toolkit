@@ -7,10 +7,7 @@ from ai_toolkit.shared_kernel.shell import shell_command_exists
 class UvxMcpInstaller:
     def install(self, server: McpServerDef) -> bool:
         if not shell_command_exists("uvx"):
-            print(
-                f"MCP server '{server.name}' requires 'uvx' "
-                f"which is not on PATH"
-            )
+            print(f"MCP server '{server.name}' requires 'uvx' which is not on PATH")
             return False
 
         non_flag_args = [a for a in server.args if not a.startswith("-")]

@@ -9,7 +9,9 @@ from ai_toolkit.install_skills.main import main
 
 class TestMain:
     @pytest.mark.unit
-    def test_main_when_skills_yaml_missing_then_returns_one(self, tmp_path: Path) -> None:
+    def test_main_when_skills_yaml_missing_then_returns_one(
+        self, tmp_path: Path
+    ) -> None:
         os.chdir(tmp_path)
         result = main()
         assert result == 1
@@ -72,7 +74,9 @@ class TestMain:
             assert result == 0
 
     @pytest.mark.unit
-    def test_main_when_remote_skills_fail_then_returns_one(self, tmp_path: Path) -> None:
+    def test_main_when_remote_skills_fail_then_returns_one(
+        self, tmp_path: Path
+    ) -> None:
         os.chdir(tmp_path)
         (tmp_path / "skills.yaml").write_text("skills: []\n")
         with (

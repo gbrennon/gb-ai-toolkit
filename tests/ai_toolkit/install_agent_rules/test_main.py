@@ -71,9 +71,7 @@ class TestMainCli:
         assert (global_dir / "00-base.md").is_file()
 
     @pytest.mark.integration
-    def test_with_persist_and_no_rules_then_returns_one(
-        self, tmp_path: Path
-    ) -> None:
+    def test_with_persist_and_no_rules_then_returns_one(self, tmp_path: Path) -> None:
         source = tmp_path / "empty.d"
         source.mkdir()
         target = tmp_path / "AGENT.md"

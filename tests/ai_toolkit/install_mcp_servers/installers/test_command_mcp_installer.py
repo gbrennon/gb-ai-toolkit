@@ -26,9 +26,7 @@ class TestCommandMcpInstaller:
 
     @pytest.mark.unit
     def test_install_when_command_exists_then_returns_true(self) -> None:
-        with patch(
-            "ai_toolkit.shared_kernel.shell.which"
-        ) as mock_which:
+        with patch("ai_toolkit.shared_kernel.shell.which") as mock_which:
             mock_which.return_value = "/usr/bin/forgejo-mcp"
             installer = CommandMcpInstaller()
             server = McpServerDef(
@@ -46,9 +44,7 @@ class TestCommandMcpInstaller:
 
     @pytest.mark.unit
     def test_install_when_command_missing_then_returns_false(self) -> None:
-        with patch(
-            "ai_toolkit.shared_kernel.shell.which"
-        ) as mock_which:
+        with patch("ai_toolkit.shared_kernel.shell.which") as mock_which:
             mock_which.return_value = None
             installer = CommandMcpInstaller()
             server = McpServerDef(
