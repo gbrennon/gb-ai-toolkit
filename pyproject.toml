@@ -49,7 +49,7 @@ addopts = [
     "--strict-config",
     "--cov=ai_toolkit",
     "--cov-report=term-missing",
-    "--cov-fail-under=80",
+    "--cov-fail-under=90",
 ]
 markers = [
     "unit: Unit tests (no external dependencies)",
