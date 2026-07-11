@@ -1,4 +1,4 @@
-# General Cline Policies
+# General Project Policies
 
 Project-agnostic guidelines for context management and file handling.
 
@@ -48,7 +48,7 @@ Project-agnostic guidelines for context management and file handling.
 
 ## File Exclusion Syntax
 
-Cline respects `.gitignore`-style patterns:
+Rules use `.gitignore`-style patterns:
 - `dir/` → exclude directory and contents recursively
 - `*.ext` → exclude by file extension
 - `**/pattern` → match pattern at any depth
@@ -62,7 +62,7 @@ Cline respects `.gitignore`-style patterns:
 - **Integration tests (Infrastructure & Presentation):** Against real infrastructure, validate contracts
 - **End-to-end (Presentation):** Validate full user flow
 
-**Cline should verify:**
+**Should verify:**
 - Domain logic has unit tests (no mocking frameworks, state-based)
 - Infrastructure has integration tests (real containers, databases, APIs)
 - Presentation has E2E tests (real browser, real user actions)
@@ -90,19 +90,19 @@ When reviewing a project, validate:
 
 ## Language-Specific Rules
 
-Cline loads rules in order:
+Rules load in order:
 1. `00-global-noise-exclusions.md` (universal patterns)
 2. `01-python-language-specific.md` (Python only)
 3. `02-project-overrides.md` (per-project exceptions)
 
-**To extend:** Create `02-project-overrides.md` in `.cline/rules/` directory.
+**To extend:** Create `02-project-overrides.md` in the rules directory.
 
 ## Performance Tips
 
 - **Context budget exceeded?** → Narrow the request scope (ask about one layer, not the whole project)
 - **Slow response?** → Check if large files (>1MB) are being read; whitelist them in overrides
 - **Noisy results?** → Add more patterns to project-specific exclusions
-- **Want to debug rules?** → Ask Cline to "list all excluded patterns and explain why"
+- **Want to debug rules?** → "list all excluded patterns and explain why"
 
 ## Secrets & Security
 

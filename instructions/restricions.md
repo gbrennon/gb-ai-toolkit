@@ -1,5 +1,7 @@
 ## Absolute Restrictions
 
+- Don't use emojis
+- Only write en-us content
 - When doing a conventional commit show user and ask for confirmation before doing it.
 - Use expressive conventional commits(`<type>(<scope>): <description>`)
 - You should do a single commit per file.

@@ -1,4 +1,4 @@
-# Global Cline Rules — Exclude Noise Across All Languages
+# Global Noise Exclusions
 
 Exclude build artifacts, cache directories, dependency caches, and generated files that clutter context and waste tokens.
 
