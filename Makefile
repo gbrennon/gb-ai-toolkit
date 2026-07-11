@@ -1,4 +1,4 @@
-.PHONY: setup install-mcp install-skills install-pi-config install test test-unit deploy-mcp clean help \
+.PHONY: setup install-mcp install-skills install-agent-rules install-pi-config install test test-unit deploy-mcp clean help \
         install-systemd uninstall-systemd install-aliases
 
 PYTHON      := .venv/bin/python
@@ -21,6 +21,9 @@ install-mcp:
 
 install-skills:
 	$(UV) run install-skills
+
+install-agent-rules:
+	$(UV) run install-agent-rules
 
 install: install-mcp install-skills
 
@@ -79,6 +82,7 @@ help:
 	@echo "  setup             Install dependencies (uv sync)"
 	@echo "  install-mcp       Install & deploy MCP servers (dev mode — uv run)"
 	@echo "  install-skills    Install skills (dev mode — uv run)"
+	@echo "  install-agent-rules  Compose agent_rules/ into ~/.agents/AGENT.md"
 	@echo "  install           Install everything (mcp + skills)"
 	@echo "  install-pi-config Sync CLINE_API_KEY from .env to Pi's auth.json"
 	@echo "  deploy-mcp        Same as install-mcp"
