@@ -1,17 +1,18 @@
-import json
 import os
 from pathlib import Path
 
 from ai_toolkit.install_mcp_servers.models.mcp_server_def import McpServerDef
 from ai_toolkit.shared_kernel.dotenv import load_dotenv
 
-_PLACEHOLDER_KEYWORDS = frozenset({
-    "placeholder",
-    "YOUR_",
-    "REPLACE_ME",
-    "TOKEN_HERE",
-    "PASTE_",
-})
+_PLACEHOLDER_KEYWORDS = frozenset(
+    {
+        "placeholder",
+        "YOUR_",
+        "REPLACE_ME",
+        "TOKEN_HERE",
+        "PASTE_",
+    }
+)
 
 
 def _is_placeholder(value: str) -> bool:

@@ -13,9 +13,7 @@ def _agent_target_path(platform: AgentPlatform) -> Path:
     return Path.home() / platform.config_path
 
 
-def _filter_servers_for_agent(
-    servers: dict, agent: AgentPlatform | str
-) -> dict:
+def _filter_servers_for_agent(servers: dict, agent: AgentPlatform | str) -> dict:
     """Filter mcpServers dict to only include entries relevant to *agent*.
 
     Rules:

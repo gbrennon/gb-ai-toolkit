@@ -2,6 +2,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Dict, List
 
+from ai_toolkit.install_mcp_servers.models.mcp_server_def import McpServerDef
 from ai_toolkit.install_mcp_servers.config_loader import ConfigLoader
 from ai_toolkit.install_mcp_servers.config_paths import ConfigPaths
 from ai_toolkit.install_mcp_servers.env_override_applier import EnvOverrideApplier
@@ -55,6 +56,7 @@ class ConfigManager:
 
     def load_config_hierarchy(self) -> Dict[str, Any]:
         config_files = self.find_config_files()
+        assert self._config_loader is not None
         merged_config = self._config_loader.load_config_hierarchy(config_files)
         merged_config = self._apply_env_overrides(merged_config)
         return merged_config
@@ -68,4 +70,3 @@ class ConfigManager:
 
     def load_from_file(self, file_path: Path) -> List[McpServerDef]:
         return load_mcp_json(file_path)
-

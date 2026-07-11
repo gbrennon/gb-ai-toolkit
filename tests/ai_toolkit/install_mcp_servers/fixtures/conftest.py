@@ -63,23 +63,37 @@ def mcp_dir(tmp_path: Path) -> Path:
 def npx_server() -> McpServerDef:
     """A basic npx server definition for installer tests."""
     return McpServerDef(
-        name="test", command="npx", args=("pkg",), env=(),
-        server_type=None, url=None, disabled=False,
+        name="test",
+        command="npx",
+        args=("pkg",),
+        env=(),
+        server_type=None,
+        url=None,
+        disabled=False,
     )
 
 
 @pytest.fixture
 def uvx_server() -> McpServerDef:
     return McpServerDef(
-        name="fetch", command="uvx", args=("mcp-server-fetch",),
-        env=(), server_type=None, url=None, disabled=False,
+        name="fetch",
+        command="uvx",
+        args=("mcp-server-fetch",),
+        env=(),
+        server_type=None,
+        url=None,
+        disabled=False,
     )
 
 
 @pytest.fixture
 def http_server() -> McpServerDef:
     return McpServerDef(
-        name="github", command=None, args=(), env=(),
-        server_type="streamableHttp", url="https://api.githubcopilot.com/mcp/",
+        name="github",
+        command=None,
+        args=(),
+        env=(),
+        server_type="streamableHttp",
+        url="https://api.githubcopilot.com/mcp/",
         disabled=False,
     )

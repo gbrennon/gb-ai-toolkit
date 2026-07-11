@@ -2,7 +2,6 @@ import shutil
 from pathlib import Path
 
 from ai_toolkit.install_skills.models.skill_def import SkillDef
-from ai_toolkit.install_skills.installers.skill_installer import SkillInstaller
 
 
 class LocalSkillInstaller:

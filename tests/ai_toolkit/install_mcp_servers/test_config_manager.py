@@ -44,19 +44,23 @@ class TestConfigManager:
     def test_load_config_hierarchy_empty_returns_empty(self):
         cm = ConfigManager(platform="linux")
         cm.find_config_files = lambda: []
-        cm._apply_env_overrides = lambda c: c
+        cm._apply_env_overrides = lambda config: config
         config = cm.load_config_hierarchy()
         assert config == {}
 
     @pytest.mark.unit
     def test_load_config_hierarchy_single_file(self, tmp_path):
         config_path = tmp_path / "mcp.json"
-        config_path.write_text(json.dumps({
-            "mcpServers": {"srv1": {"command": "npx", "args": ["pkg1"]}},
-        }))
+        config_path.write_text(
+            json.dumps(
+                {
+                    "mcpServers": {"srv1": {"command": "npx", "args": ["pkg1"]}},
+                }
+            )
+        )
         cm = ConfigManager(platform="linux")
         cm.find_config_files = lambda: [config_path]
-        cm._apply_env_overrides = lambda c: c
+        cm._apply_env_overrides = lambda config: config
         config = cm.load_config_hierarchy()
         assert "srv1" in config["mcpServers"]
 

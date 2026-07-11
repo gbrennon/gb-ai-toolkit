@@ -1,0 +1,43 @@
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.15.2
+    hooks:
+      - id: ruff
+        args: [--fix]
+      - id: ruff-format
+
+  - repo: local
+    hooks:
+      - id: pyright
+        name: pyright
+        entry: uv run pyright
+        language: system
+        types: [python]
+        args: [--pythonversion, "3.14"]
+
+  - repo: local
+    hooks:
+      - id: pytest
+        name: pytest
+        entry: uv run pytest --tb=short -q -m "unit or integration"
+        language: system
+        types: [python]
+        pass_filenames: false
+        stages: [pre-commit]
+
+      - id: pytest-e2e
+        name: pytest (e2e)
+        entry: 'bash -c "uv run pytest -q --no-cov -m \"e2e\" 2>/dev/null; rc=$?; [ $rc -eq 5 ] && exit 0; exit $rc"'
+        language: system
+        types: [python]
+        pass_filenames: false
+        stages: [pre-push]
+        pass_filenames: false
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-merge-conflict
+      - id: detect-private-key

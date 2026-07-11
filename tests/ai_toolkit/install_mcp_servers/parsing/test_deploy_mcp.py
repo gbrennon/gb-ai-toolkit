@@ -39,7 +39,9 @@ class TestDeployMcp:
     ) -> None:
         monkeypatch.delenv("MY_TOKEN", raising=False)
         source = tmp_path / "mcp.json"
-        source.write_text('{"mcpServers":{"srv":{"env":{"MY_TOKEN":"{{ MY_TOKEN or \'YOUR_TOKEN_HERE\' }}"}}}}')
+        source.write_text(
+            '{"mcpServers":{"srv":{"env":{"MY_TOKEN":"{{ MY_TOKEN or \'YOUR_TOKEN_HERE\' }}"}}}}'
+        )
         dotenv = tmp_path / ".env"
         dotenv.write_text("MY_TOKEN=real_value\n")
         target = tmp_path / "out.json"
@@ -57,7 +59,9 @@ class TestDeployMcp:
     ) -> None:
         monkeypatch.setenv("MY_TOKEN", "from_environ")
         source = tmp_path / "mcp.json"
-        source.write_text('{"mcpServers":{"srv":{"env":{"MY_TOKEN":"{{ MY_TOKEN or \'PLACEHOLDER\' }}"}}}}')
+        source.write_text(
+            '{"mcpServers":{"srv":{"env":{"MY_TOKEN":"{{ MY_TOKEN or \'PLACEHOLDER\' }}"}}}}'
+        )
         target = tmp_path / "out.json"
 
         result = deploy_mcp(source, target, dotenv_path=None)
@@ -88,8 +92,8 @@ class TestDeployMcp:
         monkeypatch.setenv("GITHUB_TOKEN", "ghp_real")
         source = tmp_path / "mcp.json"
         source.write_text(
-            '{"mcpServers":{"github":{"headers":{' +
-            '"Authorization":"Bearer {{ GITHUB_TOKEN or \'YOUR_GITHUB_TOKEN_HERE\' }}"}}}}'
+            '{"mcpServers":{"github":{"headers":{'
+            + '"Authorization":"Bearer {{ GITHUB_TOKEN or \'YOUR_GITHUB_TOKEN_HERE\' }}"}}}}'
         )
         target = tmp_path / "out.json"
 
@@ -110,8 +114,8 @@ class TestDeployMcp:
         monkeypatch.delenv("GITHUB_TOKEN", raising=False)
         source = tmp_path / "mcp.json"
         source.write_text(
-            '{"mcpServers":{"github":{"headers":{' +
-            '"Authorization":"Bearer {{ GITHUB_TOKEN or \'YOUR_GITHUB_TOKEN_HERE\' }}"}}}}'
+            '{"mcpServers":{"github":{"headers":{'
+            + '"Authorization":"Bearer {{ GITHUB_TOKEN or \'YOUR_GITHUB_TOKEN_HERE\' }}"}}}}'
         )
         target = tmp_path / "out.json"
 
@@ -154,7 +158,7 @@ class TestDeployMcp:
             '"shared":{"command":"npx","args":["shared-pkg"]},'
             '"oc-srv":{"command":"npx","args":["oc-pkg"],"platform":"opencode"},'
             '"pi-srv":{"command":"npx","args":["pi-pkg"],"platform":"pi"}'
-            '}}'
+            "}}"
         )
         primary = tmp_path / "cline.json"
         oc_target = tmp_path / "opencode.json"
@@ -163,7 +167,10 @@ class TestDeployMcp:
         result = deploy_mcp(
             source,
             primary,
-            agent_targets={AgentPlatform.OPENCODE: oc_target, AgentPlatform.PI: pi_target},
+            agent_targets={
+                AgentPlatform.OPENCODE: oc_target,
+                AgentPlatform.PI: pi_target,
+            },
         )
         assert result is True
 
@@ -227,4 +234,3 @@ class TestDeployMcp:
         oc_data = json.loads(oc_target.read_text())
         assert oc_data["other"] == "data"
         assert "srv" in oc_data["mcpServers"]
-

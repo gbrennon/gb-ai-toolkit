@@ -18,7 +18,9 @@ class TestGroupRemoteSkills:
         }
 
     @pytest.mark.unit
-    def test_group_when_skills_use_owner_repo_format_then_derives_github_url(self) -> None:
+    def test_group_when_skills_use_owner_repo_format_then_derives_github_url(
+        self,
+    ) -> None:
         skills = [
             "owner-a/repo-a/path/to/skill",
             "owner-a/repo-a/other/skill",

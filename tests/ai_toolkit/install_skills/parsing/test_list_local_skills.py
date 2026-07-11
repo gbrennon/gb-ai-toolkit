@@ -8,7 +8,9 @@ from ai_toolkit.install_skills.parsing.list_local_skills import list_local_skill
 
 class TestListLocalSkills:
     @pytest.mark.integration
-    def test_list_when_dir_does_not_exist_then_returns_empty(self, tmp_path: Path) -> None:
+    def test_list_when_dir_does_not_exist_then_returns_empty(
+        self, tmp_path: Path
+    ) -> None:
         nonexistent = tmp_path / "no-such-dir"
         skills = list_local_skills(nonexistent)
         assert skills == []
