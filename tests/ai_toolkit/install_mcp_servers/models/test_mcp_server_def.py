@@ -50,7 +50,7 @@ class TestMcpServerDef:
             disabled=False,
         )
         with pytest.raises(AttributeError):
-            server.name = "changed"
+            server.name = "changed"  # pyright: ignore[reportAttributeAccessIssue]
 
     @pytest.mark.unit
     def test_construct_when_disabled_then_flag_is_true(self) -> None:
