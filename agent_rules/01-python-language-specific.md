@@ -1,4 +1,4 @@
-# Python-Specific Cline Rules
+# Python-Specific Exclusions
 
 Exclude Python-specific build artifacts, cache directories, and virtual environments.
 
