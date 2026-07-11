@@ -1,3 +1,5 @@
+.DEFAULT_GOAL := help
+
 .PHONY: setup install-mcp install-skills install-agent-rules install-pi-config install test test-unit deploy-mcp clean help \
         install-systemd uninstall-systemd install-aliases
 
