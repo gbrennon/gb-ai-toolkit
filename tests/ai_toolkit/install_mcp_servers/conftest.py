@@ -6,4 +6,3 @@ from tests.ai_toolkit.install_mcp_servers.fixtures.conftest import (  # noqa: F4
     sample_mcp_json,
     uvx_server,
 )
-

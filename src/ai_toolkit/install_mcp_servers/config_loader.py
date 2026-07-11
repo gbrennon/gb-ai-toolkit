@@ -20,12 +20,14 @@ class ConfigLoader:
 
         for config_file in reversed(config_files):
             try:
-                with open(config_file, 'r', encoding='utf-8') as f:
+                with open(config_file, "r", encoding="utf-8") as f:
                     config_data = json.load(f)
                     if "mcpServers" in config_data:
                         if "mcpServers" not in merged_config:
                             merged_config["mcpServers"] = {}
-                        for server_name, server_config in config_data["mcpServers"].items():
+                        for server_name, server_config in config_data[
+                            "mcpServers"
+                        ].items():
                             merged_config["mcpServers"][server_name] = server_config
             except (json.JSONDecodeError, IOError) as e:
                 print(f"Warning: Could not load config file {config_file}: {e}")

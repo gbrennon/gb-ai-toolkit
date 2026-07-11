@@ -14,4 +14,4 @@ class TestSkillDef:
     def test_immutable_when_constructed_then_cannot_modify(self) -> None:
         skill = SkillDef(name="fixed", source="/path")
         with pytest.raises(AttributeError):
-            skill.name = "changed"
+            skill.name = "changed"  # pyright: ignore[reportAttributeAccessIssue]

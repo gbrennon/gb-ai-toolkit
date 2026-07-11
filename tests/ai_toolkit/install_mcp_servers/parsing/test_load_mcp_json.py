@@ -59,9 +59,7 @@ class TestLoadMcpJson:
         servers = load_mcp_json(sample_mcp_json)
         forgejo = next(s for s in servers if s.name == "forgejo")
         assert forgejo.command == "forgejo-mcp"
-        assert forgejo.env == (
-            ("FORGEJO_ACCESS_TOKEN", "YOUR_CODEBERG_TOKEN_HERE"),
-        )
+        assert forgejo.env == (("FORGEJO_ACCESS_TOKEN", "YOUR_CODEBERG_TOKEN_HERE"),)
 
     @pytest.mark.unit
     def test_load_when_json_empty_then_returns_empty_list(self, tmp_path: Path) -> None:
@@ -114,8 +112,6 @@ class TestLoadMcpJson:
         tmp_path: Path,
     ) -> None:
         p = tmp_path / "mcp.json"
-        p.write_text(
-            '{"mcpServers": {"srv": {"command": "npx", "args": ["pkg"]}}}'
-        )
+        p.write_text('{"mcpServers": {"srv": {"command": "npx", "args": ["pkg"]}}}')
         servers = load_mcp_json(p)
         assert servers[0].platform is None

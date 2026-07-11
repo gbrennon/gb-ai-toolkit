@@ -27,9 +27,7 @@ class TestMergeJson:
         assert data == {"providers": {"Cline": {"name": "Cline"}}}
 
     @pytest.mark.integration
-    def test_when_file_exists_then_merges_under_key_entry(
-        self, tmp_path: Path
-    ) -> None:
+    def test_when_file_exists_then_merges_under_key_entry(self, tmp_path: Path) -> None:
         p = tmp_path / "data.json"
         p.write_text(json.dumps({"existing": {"a": 1}}), encoding="utf-8")
         _merge_json(p, "providers", "Cline", {"name": "Cline"})
@@ -40,9 +38,7 @@ class TestMergeJson:
         }
 
     @pytest.mark.integration
-    def test_when_file_has_invalid_json_then_starts_fresh(
-        self, tmp_path: Path
-    ) -> None:
+    def test_when_file_has_invalid_json_then_starts_fresh(self, tmp_path: Path) -> None:
         p = tmp_path / "data.json"
         p.write_text("not json", encoding="utf-8")
         _merge_json(p, "providers", "Cline", {"name": "Cline"})
@@ -87,9 +83,7 @@ class TestMergeJson:
 
 class TestSyncAuth:
     @pytest.mark.integration
-    def test_when_file_does_not_exist_then_creates_file(
-        self, tmp_path: Path
-    ) -> None:
+    def test_when_file_does_not_exist_then_creates_file(self, tmp_path: Path) -> None:
         p = tmp_path / "auth.json"
         _sync_auth(p, "sk-ant-abc123")
         data = json.loads(p.read_text(encoding="utf-8"))
@@ -147,7 +141,10 @@ class TestRegisterPiProvider:
         p = tmp_path / "models.json"
         _register_pi_provider(p, "")
         model_ids = {
-            m["id"] for m in json.loads(p.read_text(encoding="utf-8"))["providers"]["Cline"]["models"]
+            m["id"]
+            for m in json.loads(p.read_text(encoding="utf-8"))["providers"]["Cline"][
+                "models"
+            ]
         }
         assert model_ids == {
             "claude-sonnet-4-20250514",
@@ -158,9 +155,7 @@ class TestRegisterPiProvider:
 
 class TestRegisterOpencodeProvider:
     @pytest.mark.integration
-    def test_when_no_base_url_then_uses_default_v1_url(
-        self, tmp_path: Path
-    ) -> None:
+    def test_when_no_base_url_then_uses_default_v1_url(self, tmp_path: Path) -> None:
         p = tmp_path / "opencode.json"
         _register_opencode_provider(p, "")
         data = json.loads(p.read_text(encoding="utf-8"))
@@ -169,9 +164,7 @@ class TestRegisterOpencodeProvider:
         assert provider["options"]["apiKey"] == "{env:CLINE_API_KEY}"
 
     @pytest.mark.integration
-    def test_when_base_url_provided_then_uses_custom_url(
-        self, tmp_path: Path
-    ) -> None:
+    def test_when_base_url_provided_then_uses_custom_url(self, tmp_path: Path) -> None:
         p = tmp_path / "opencode.json"
         _register_opencode_provider(p, "https://custom.example.com")
         data = json.loads(p.read_text(encoding="utf-8"))
@@ -184,7 +177,9 @@ class TestRegisterOpencodeProvider:
     def test_models_are_included_in_entry(self, tmp_path: Path) -> None:
         p = tmp_path / "opencode.json"
         _register_opencode_provider(p, "")
-        models = json.loads(p.read_text(encoding="utf-8"))["provider"]["Cline"]["models"]
+        models = json.loads(p.read_text(encoding="utf-8"))["provider"]["Cline"][
+            "models"
+        ]
         assert "claude-sonnet-4-20250514" in models
         assert "claude-opus-4-20250514" in models
         assert "claude-haiku-3-5-20241022" in models
@@ -258,7 +253,10 @@ class TestMain:
         pi_data = json.loads(models.read_text(encoding="utf-8"))
         assert pi_data["providers"]["Cline"]["baseUrl"] == "https://custom.example.com"
         oc_data = json.loads(opencode_cfg.read_text(encoding="utf-8"))
-        assert oc_data["provider"]["Cline"]["options"]["baseURL"] == "https://custom.example.com"
+        assert (
+            oc_data["provider"]["Cline"]["options"]["baseURL"]
+            == "https://custom.example.com"
+        )
 
     @pytest.mark.integration
     def test_with_default_paths_when_home_constants_monkeypatched(
@@ -301,9 +299,7 @@ class TestMain:
         dotenv.write_text("CLINE_API_KEY=sk-ant-abc123\n", encoding="utf-8")
         monkeypatch.setattr(main_module, "_register_pi_provider", lambda _p, _b: False)
 
-        rc = main(
-            dotenv_path=dotenv, pi_models_path=tmp_path / "models.json"
-        )
+        rc = main(dotenv_path=dotenv, pi_models_path=tmp_path / "models.json")
         assert rc == 1
 
     @pytest.mark.unit
@@ -316,9 +312,7 @@ class TestMain:
             main_module, "_register_opencode_provider", lambda _c, _b: False
         )
 
-        rc = main(
-            dotenv_path=dotenv, opencode_config_path=tmp_path / "opencode.json"
-        )
+        rc = main(dotenv_path=dotenv, opencode_config_path=tmp_path / "opencode.json")
         assert rc == 1
 
     @pytest.mark.unit
@@ -328,9 +322,7 @@ class TestMain:
         dotenv = tmp_path / ".env"
         dotenv.write_text("CLINE_API_KEY=sk-ant-abc123\n", encoding="utf-8")
         monkeypatch.setattr(main_module, "_sync_auth", lambda _a, _k: False)
-        monkeypatch.setattr(
-            main_module, "_register_pi_provider", lambda _p, _b: False
-        )
+        monkeypatch.setattr(main_module, "_register_pi_provider", lambda _p, _b: False)
         monkeypatch.setattr(
             main_module, "_register_opencode_provider", lambda _c, _b: False
         )

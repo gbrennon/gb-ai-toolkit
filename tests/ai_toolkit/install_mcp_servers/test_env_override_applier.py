@@ -23,7 +23,9 @@ class TestEnvOverrideApplier:
         applier = EnvOverrideApplier()
         config = {"key": "value"}
 
-        with patch.dict("os.environ", {"MCP_CONFIG_PATH": "/nonexistent/override.json"}):
+        with patch.dict(
+            "os.environ", {"MCP_CONFIG_PATH": "/nonexistent/override.json"}
+        ):
             with patch.object(Path, "exists", return_value=False):
                 result = applier.apply_env_overrides(config)
 
@@ -48,7 +50,9 @@ class TestEnvOverrideApplier:
         }
 
     @pytest.mark.unit
-    def test_when_file_has_mcp_servers_but_config_has_no_mcp_servers_then_assigned_directly(self):
+    def test_when_file_has_mcp_servers_but_config_has_no_mcp_servers_then_assigned_directly(
+        self,
+    ):
         applier = EnvOverrideApplier()
         config = {"other": "value"}
         env_content = json.dumps({"mcpServers": {"srv": {"command": "npx"}}})
@@ -77,10 +81,12 @@ class TestEnvOverrideApplier:
     def test_when_file_has_mixed_keys_then_mcp_servers_merged_and_others_assigned(self):
         applier = EnvOverrideApplier()
         config = {"mcpServers": {"s1": {"command": "a"}}, "keep": "me"}
-        env_content = json.dumps({
-            "mcpServers": {"s2": {"command": "b"}},
-            "extra": "value",
-        })
+        env_content = json.dumps(
+            {
+                "mcpServers": {"s2": {"command": "b"}},
+                "extra": "value",
+            }
+        )
 
         with patch.dict("os.environ", {"MCP_CONFIG_PATH": "/fake/path.json"}):
             with patch.object(Path, "exists", return_value=True):
@@ -94,7 +100,9 @@ class TestEnvOverrideApplier:
         }
 
     @pytest.mark.unit
-    def test_when_file_contains_invalid_json_then_warning_and_config_unchanged(self, capsys):
+    def test_when_file_contains_invalid_json_then_warning_and_config_unchanged(
+        self, capsys
+    ):
         applier = EnvOverrideApplier()
         config = {"key": "value"}
 
@@ -108,7 +116,9 @@ class TestEnvOverrideApplier:
         assert "Warning: Could not load env config file /fake/path.json" in captured.out
 
     @pytest.mark.unit
-    def test_when_file_read_fails_with_ioerror_then_warning_and_config_unchanged(self, capsys):
+    def test_when_file_read_fails_with_ioerror_then_warning_and_config_unchanged(
+        self, capsys
+    ):
         applier = EnvOverrideApplier()
 
         with patch.dict("os.environ", {"MCP_CONFIG_PATH": "/fake/path.json"}):
@@ -126,7 +136,9 @@ class TestEnvOverrideApplier:
         applier = EnvOverrideApplier()
         config = {"mcpServers": {"s1": {"command": "a"}}}
         override_file = tmp_path / "override.json"
-        override_file.write_text(json.dumps({"mcpServers": {"s2": {"command": "b"}}, "other": "val"}))
+        override_file.write_text(
+            json.dumps({"mcpServers": {"s2": {"command": "b"}}, "other": "val"})
+        )
 
         with patch.dict("os.environ", {"MCP_CONFIG_PATH": str(override_file)}):
             result = applier.apply_env_overrides(config)

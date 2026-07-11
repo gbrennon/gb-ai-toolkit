@@ -56,6 +56,7 @@ class ConfigManager:
 
     def load_config_hierarchy(self) -> Dict[str, Any]:
         config_files = self.find_config_files()
+        assert self._config_loader is not None
         merged_config = self._config_loader.load_config_hierarchy(config_files)
         merged_config = self._apply_env_overrides(merged_config)
         return merged_config
@@ -69,4 +70,3 @@ class ConfigManager:
 
     def load_from_file(self, file_path: Path) -> List[McpServerDef]:
         return load_mcp_json(file_path)
-

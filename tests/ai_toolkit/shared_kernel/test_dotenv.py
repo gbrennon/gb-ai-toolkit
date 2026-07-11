@@ -43,7 +43,7 @@ class TestLoadDotenv:
         tmp_path: Path,
     ) -> None:
         p = tmp_path / ".env"
-        p.write_text('KEY="double"\nOTHER=\'single\'\n')
+        p.write_text("KEY=\"double\"\nOTHER='single'\n")
         result = load_dotenv(p)
         assert result == {"KEY": "double", "OTHER": "single"}
 

@@ -6,10 +6,12 @@ from ai_toolkit.install_mcp_servers.installers.install_mcp import install_mcp
 from tests.ai_toolkit.install_mcp_servers.fakes import FakeMcpInstaller
 
 
-def _make_server(name, command="npx", server_type=None, platform=None):
+def _make_server(name, command: str | None = "npx", server_type=None, platform=None):
     server = McpServerDef(
-        name=name, command=command,
-        args=("-y", "pkg") if command else (), env=(),
+        name=name,
+        command=command,
+        args=("-y", "pkg") if command else (),
+        env=(),
         server_type=server_type,
         url="https://example.com" if server_type == "streamableHttp" else None,
         disabled=False,
@@ -22,7 +24,16 @@ class TestInstallMcp:
     @pytest.mark.unit
     def test_when_all_succeed_then_empty(self, fake_installer):
         servers = [_make_server("a"), _make_server("b")]
-        failed = install_mcp(fake_installer, fake_installer, fake_installer, fake_installer, fake_installer, fake_installer, fake_installer, servers)
+        failed = install_mcp(
+            fake_installer,
+            fake_installer,
+            fake_installer,
+            fake_installer,
+            fake_installer,
+            fake_installer,
+            fake_installer,
+            servers,
+        )
         assert failed == []
         assert fake_installer.installed == servers
 
@@ -30,19 +41,54 @@ class TestInstallMcp:
     def test_when_some_fail_then_failed_list(self, fake_installer):
         fake_installer.fail_on = ["b"]
         servers = [_make_server("a"), _make_server("b")]
-        failed = install_mcp(fake_installer, fake_installer, fake_installer, fake_installer, fake_installer, fake_installer, fake_installer, servers)
+        failed = install_mcp(
+            fake_installer,
+            fake_installer,
+            fake_installer,
+            fake_installer,
+            fake_installer,
+            fake_installer,
+            fake_installer,
+            servers,
+        )
         assert failed == ["b"]
 
     @pytest.mark.unit
     def test_when_empty_then_empty(self, fake_installer):
-        failed = install_mcp(fake_installer, fake_installer, fake_installer, fake_installer, fake_installer, fake_installer, fake_installer, [])
+        failed = install_mcp(
+            fake_installer,
+            fake_installer,
+            fake_installer,
+            fake_installer,
+            fake_installer,
+            fake_installer,
+            fake_installer,
+            [],
+        )
         assert failed == []
 
     @pytest.mark.unit
     def test_when_disabled_then_skips(self, fake_installer):
         enabled = _make_server("enabled")
-        disabled = McpServerDef(name="disabled", command="npx", args=("-y", "pkg"), env=(), server_type=None, url=None, disabled=True)
-        failed = install_mcp(fake_installer, fake_installer, fake_installer, fake_installer, fake_installer, fake_installer, fake_installer, [enabled, disabled])
+        disabled = McpServerDef(
+            name="disabled",
+            command="npx",
+            args=("-y", "pkg"),
+            env=(),
+            server_type=None,
+            url=None,
+            disabled=True,
+        )
+        failed = install_mcp(
+            fake_installer,
+            fake_installer,
+            fake_installer,
+            fake_installer,
+            fake_installer,
+            fake_installer,
+            fake_installer,
+            [enabled, disabled],
+        )
         assert failed == []
         assert fake_installer.installed == [enabled]
 
@@ -97,9 +143,13 @@ class TestInstallMcp:
 
     @pytest.mark.unit
     def test_platform_priority_over_command(self, fake_installer):
-        servers = [_make_server("oc-npx", command="npx", platform=AgentPlatform.OPENCODE)]
+        servers = [
+            _make_server("oc-npx", command="npx", platform=AgentPlatform.OPENCODE)
+        ]
         noop = FakeMcpInstaller()
         npx_installer = FakeMcpInstaller()
-        install_mcp(npx_installer, noop, noop, noop, fake_installer, noop, noop, servers)
+        install_mcp(
+            npx_installer, noop, noop, noop, fake_installer, noop, noop, servers
+        )
         assert fake_installer.installed == servers
         assert npx_installer.installed == []

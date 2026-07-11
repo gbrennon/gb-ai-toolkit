@@ -31,9 +31,7 @@ class TestConfigLoader:
         existing = tmp_path / "mcp.json"
         existing.write_text("{}")
         missing = tmp_path / ".mcp.json"
-        loader = ConfigLoader(
-            config_paths=_fake_config_paths([existing, missing])
-        )
+        loader = ConfigLoader(config_paths=_fake_config_paths([existing, missing]))
 
         found = loader.find_config_files("linux")
 
@@ -48,9 +46,7 @@ class TestConfigLoader:
         b = tmp_path / "b.json"
         a.write_text("{}")
         b.write_text("{}")
-        loader = ConfigLoader(
-            config_paths=_fake_config_paths([a, b])
-        )
+        loader = ConfigLoader(config_paths=_fake_config_paths([a, b]))
 
         found = loader.find_config_files("linux")
 
@@ -67,8 +63,12 @@ class TestConfigLoader:
 
     @pytest.mark.unit
     def test_load_config_hierarchy_first_wins(self) -> None:
-        first = _config_file({"mcpServers": {"shared": {"key": "first"}, "unique-a": {"key": "a"}}})
-        second = _config_file({"mcpServers": {"shared": {"key": "second"}, "unique-b": {"key": "b"}}})
+        first = _config_file(
+            {"mcpServers": {"shared": {"key": "first"}, "unique-a": {"key": "a"}}}
+        )
+        second = _config_file(
+            {"mcpServers": {"shared": {"key": "second"}, "unique-b": {"key": "b"}}}
+        )
         loader = ConfigLoader()
 
         result = loader.load_config_hierarchy([first, second])
@@ -163,7 +163,9 @@ class TestConfigLoader:
         high.write_text(json.dumps({"mcpServers": {"srv": {"cmd": "npx"}}}))
         low.write_text(json.dumps({"mcpServers": {"srv": {"cmd": "uvx"}}}))
 
-        with patch.object(ConfigPaths, "get_standard_config_paths", return_value=[high, low]):
+        with patch.object(
+            ConfigPaths, "get_standard_config_paths", return_value=[high, low]
+        ):
             loader = ConfigLoader()
             config_files = loader.find_config_files("linux")
             result = loader.load_config_hierarchy(config_files)
