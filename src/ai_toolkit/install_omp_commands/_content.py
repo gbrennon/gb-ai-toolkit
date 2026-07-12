@@ -2,7 +2,7 @@
 
 CLINE_AUTH_COMMAND_MD = r"""# Cline Auth Command
 
-Verify and repair Cline provider authentication. Uses scripts in ~/.omp/scripts/.
+Verify and repair Cline provider authentication. Uses scripts in ~/.omp/agent/scripts/.
 
 ## Arguments
 
@@ -16,19 +16,19 @@ Verify and repair Cline provider authentication. Uses scripts in ~/.omp/scripts/
 ### 1. Check auth health
 
 ```bash
-bash ~/.omp/scripts/cline-auth-check.sh $ARGUMENTS
+bash ~/.omp/agent/scripts/cline-auth-check.sh $ARGUMENTS
 ```
 
 ### 2. If re-auth succeeded, sync token to OMP
 
 ```bash
-bash ~/.omp/scripts/cline-auth-sync.sh
+bash ~/.omp/agent/scripts/cline-auth-sync.sh
 ```
 
 ### 3. Verify
 
 ```bash
-bash ~/.omp/scripts/cline-auth-check.sh --quiet && echo "OK" || echo "FAILED"
+bash ~/.omp/agent/scripts/cline-auth-check.sh --quiet && echo "OK" || echo "FAILED"
 ```
 """
 
