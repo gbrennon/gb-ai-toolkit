@@ -1,10 +1,10 @@
 """Install OMP Commands — Cline auth management for Oh My Pi (OMP).
 
 Installs:
-  - ~/.omp/commands/cline-auth.md      (slash command for OMP agent)
-  - ~/.omp/scripts/cline-auth-check.sh  (token validation + re-auth)
-  - ~/.omp/scripts/cline-auth-sync.sh   (token → OMP env sync)
-  - ~/.omp/env                          (CLINE_USER_KEY export file)
+  - ~/.omp/agent/commands/cline-auth.md      (slash command for OMP agent)
+  - ~/.omp/agent/scripts/cline-auth-check.sh  (token validation + re-auth)
+  - ~/.omp/agent/scripts/cline-auth-sync.sh   (token → OMP env sync)
+  - ~/.omp/env                                (CLINE_USER_KEY export file)
 """
 
 import json
@@ -56,8 +56,8 @@ def install(
     commands_dir: Path | None = None,
     scripts_dir: Path | None = None,
 ) -> int:
-    cmd_dir = commands_dir or Path.home() / ".omp" / "commands"
-    scr_dir = scripts_dir or Path.home() / ".omp" / "scripts"
+    cmd_dir = commands_dir or Path.home() / ".omp" / "agent" / "commands"
+    scr_dir = scripts_dir or Path.home() / ".omp" / "agent" / "scripts"
     failures: list[str] = []
 
     for name, content, exe in [
