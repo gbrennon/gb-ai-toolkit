@@ -10,7 +10,7 @@ PI_AUTH_PATH: Path = Path.home() / ".pi" / "agent" / "auth.json"
 PI_MODELS_PATH: Path = Path.home() / ".pi" / "agent" / "models.json"
 OPENCODE_CONFIG_PATH: Path = Path.home() / ".config" / "opencode" / "opencode.json"
 
-# Default Cline models available through Cline API credits
+
 _CLINE_MODELS_PI: list[dict] = [
     {
         "id": "claude-sonnet-4-20250514",
