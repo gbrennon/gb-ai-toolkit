@@ -8,7 +8,9 @@ import pytest
 PROJECT_DIR = Path(__file__).resolve().parents[3]
 
 
-def run_detect(repo_dir: Path, extra_env: dict[str, str] | None = None) -> subprocess.CompletedProcess:
+def run_detect(
+    repo_dir: Path, extra_env: dict[str, str] | None = None
+) -> subprocess.CompletedProcess:
     env = {**os.environ, "GIT_DIR": str(repo_dir / ".git")}
     if extra_env:
         env.update(extra_env)
@@ -31,6 +33,7 @@ def run_detect_json(repo_dir: Path) -> dict:
         env=env,
     )
     import json
+
     return json.loads(result.stdout)
 
 
@@ -42,7 +45,9 @@ class TestForgeDetectIntegration:
             subprocess.run(["git", "init", "-q"], cwd=repo, check=True)
             subprocess.run(
                 ["git", "remote", "add", "origin", "https://github.com/owner/repo.git"],
-                cwd=repo, check=True, capture_output=True,
+                cwd=repo,
+                check=True,
+                capture_output=True,
             )
             result = run_detect(repo)
             assert result.returncode == 0
@@ -54,7 +59,9 @@ class TestForgeDetectIntegration:
             subprocess.run(["git", "init", "-q"], cwd=repo, check=True)
             subprocess.run(
                 ["git", "remote", "add", "origin", "https://codeberg.org/u/r.git"],
-                cwd=repo, check=True, capture_output=True,
+                cwd=repo,
+                check=True,
+                capture_output=True,
             )
             result = run_detect(repo)
             assert result.stdout.strip() == "codeberg"
@@ -65,7 +72,9 @@ class TestForgeDetectIntegration:
             subprocess.run(["git", "init", "-q"], cwd=repo, check=True)
             subprocess.run(
                 ["git", "remote", "add", "origin", "https://gitlab.com/o/p.git"],
-                cwd=repo, check=True, capture_output=True,
+                cwd=repo,
+                check=True,
+                capture_output=True,
             )
             result = run_detect(repo)
             assert result.stdout.strip() == "gitlab"
@@ -76,7 +85,9 @@ class TestForgeDetectIntegration:
             subprocess.run(["git", "init", "-q"], cwd=repo, check=True)
             subprocess.run(
                 ["git", "remote", "add", "origin", "https://bitbucket.org/o/r.git"],
-                cwd=repo, check=True, capture_output=True,
+                cwd=repo,
+                check=True,
+                capture_output=True,
             )
             result = run_detect(repo)
             assert result.stdout.strip() == "bitbucket"
@@ -87,7 +98,9 @@ class TestForgeDetectIntegration:
             subprocess.run(["git", "init", "-q"], cwd=repo, check=True)
             subprocess.run(
                 ["git", "remote", "add", "origin", "https://gitea.com/o/r.git"],
-                cwd=repo, check=True, capture_output=True,
+                cwd=repo,
+                check=True,
+                capture_output=True,
             )
             result = run_detect(repo)
             assert result.stdout.strip() == "gitea"
@@ -98,7 +111,9 @@ class TestForgeDetectIntegration:
             subprocess.run(["git", "init", "-q"], cwd=repo, check=True)
             subprocess.run(
                 ["git", "remote", "add", "origin", "git@github.com:o/r.git"],
-                cwd=repo, check=True, capture_output=True,
+                cwd=repo,
+                check=True,
+                capture_output=True,
             )
             result = run_detect(repo)
             assert result.stdout.strip() == "github"
@@ -108,8 +123,16 @@ class TestForgeDetectIntegration:
             repo = Path(tmp)
             subprocess.run(["git", "init", "-q"], cwd=repo, check=True)
             subprocess.run(
-                ["git", "remote", "add", "origin", "https://github.mycompany.com/o/r.git"],
-                cwd=repo, check=True, capture_output=True,
+                [
+                    "git",
+                    "remote",
+                    "add",
+                    "origin",
+                    "https://github.mycompany.com/o/r.git",
+                ],
+                cwd=repo,
+                check=True,
+                capture_output=True,
             )
             result = run_detect(repo)
             assert result.stdout.strip() == "github"
@@ -120,7 +143,9 @@ class TestForgeDetectIntegration:
             subprocess.run(["git", "init", "-q"], cwd=repo, check=True)
             subprocess.run(
                 ["git", "remote", "add", "origin", "https://myhost.com/o/r.git"],
-                cwd=repo, check=True, capture_output=True,
+                cwd=repo,
+                check=True,
+                capture_output=True,
             )
             result = run_detect(repo)
             assert result.stdout.strip() == "unknown"
@@ -139,7 +164,9 @@ class TestForgeDetectIntegration:
             subprocess.run(["git", "init", "-q"], cwd=repo, check=True)
             subprocess.run(
                 ["git", "remote", "add", "myremote", "https://gitlab.com/o/p.git"],
-                cwd=repo, check=True, capture_output=True,
+                cwd=repo,
+                check=True,
+                capture_output=True,
             )
             result = run_detect(repo, extra_env={"REMOTE": "myremote"})
             assert result.stdout.strip() == "gitlab"
@@ -150,7 +177,9 @@ class TestForgeDetectIntegration:
             subprocess.run(["git", "init", "-q"], cwd=repo, check=True)
             subprocess.run(
                 ["git", "remote", "add", "origin", "https://github.com/o/r.git"],
-                cwd=repo, check=True, capture_output=True,
+                cwd=repo,
+                check=True,
+                capture_output=True,
             )
             data = run_detect_json(repo)
             assert data["forge"] == "github"
@@ -163,29 +192,41 @@ class TestForgeDetectIntegration:
             subprocess.run(["git", "init", "-q"], cwd=repo, check=True)
             subprocess.run(
                 ["git", "remote", "add", "origin", "https://github.com/fork/repo.git"],
-                cwd=repo, check=True, capture_output=True,
+                cwd=repo,
+                check=True,
+                capture_output=True,
             )
             bare = Path(tmp) / "bare"
             subprocess.run(["git", "init", "--bare", "-q", str(bare)], check=True)
             subprocess.run(
                 ["git", "commit", "--allow-empty", "-m", "init"],
-                cwd=repo, check=True, capture_output=True,
+                cwd=repo,
+                check=True,
+                capture_output=True,
             )
             subprocess.run(
                 ["git", "push", str(bare), "main"],
-                cwd=repo, check=True, capture_output=True,
+                cwd=repo,
+                check=True,
+                capture_output=True,
             )
             subprocess.run(
                 ["git", "remote", "add", "upstream", str(bare)],
-                cwd=repo, check=True, capture_output=True,
+                cwd=repo,
+                check=True,
+                capture_output=True,
             )
             subprocess.run(
                 ["git", "fetch", "upstream"],
-                cwd=repo, check=True, capture_output=True,
+                cwd=repo,
+                check=True,
+                capture_output=True,
             )
             subprocess.run(
                 ["git", "branch", "-u", "upstream/main"],
-                cwd=repo, check=True, capture_output=True,
+                cwd=repo,
+                check=True,
+                capture_output=True,
             )
             code = (
                 "from ai_toolkit.forge.api import get_main_remote; "
@@ -194,8 +235,10 @@ class TestForgeDetectIntegration:
             env = {**os.environ, "GIT_DIR": str(repo / ".git")}
             result = subprocess.run(
                 ["uv", "run", "--directory", str(PROJECT_DIR), "python", "-c", code],
-                capture_output=True, text=True,
-                cwd=str(repo), env=env,
+                capture_output=True,
+                text=True,
+                cwd=str(repo),
+                env=env,
             )
             assert result.stdout.strip() == "upstream"
 
@@ -205,11 +248,15 @@ class TestForgeDetectIntegration:
             subprocess.run(["git", "init", "-q"], cwd=repo, check=True)
             subprocess.run(
                 ["git", "remote", "add", "origin", "https://bitbucket.org/o/r.git"],
-                cwd=repo, check=True, capture_output=True,
+                cwd=repo,
+                check=True,
+                capture_output=True,
             )
             subprocess.run(
                 ["git", "remote", "add", "upstream", "https://gitlab.com/o/p.git"],
-                cwd=repo, check=True, capture_output=True,
+                cwd=repo,
+                check=True,
+                capture_output=True,
             )
             result = run_detect(repo)
             assert result.stdout.strip() == "bitbucket"
@@ -220,7 +267,9 @@ class TestForgeDetectIntegration:
             subprocess.run(["git", "init", "-q"], cwd=repo, check=True)
             subprocess.run(
                 ["git", "remote", "add", "first", "https://codeberg.org/o/r.git"],
-                cwd=repo, check=True, capture_output=True,
+                cwd=repo,
+                check=True,
+                capture_output=True,
             )
             result = run_detect(repo)
             assert result.stdout.strip() == "codeberg"
