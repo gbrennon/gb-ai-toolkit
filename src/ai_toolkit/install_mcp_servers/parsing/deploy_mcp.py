@@ -26,11 +26,10 @@ def _filter_servers_for_agent(servers: dict, agent: AgentPlatform | str) -> dict
     for name, cfg in servers.items():
         platform = cfg.get("platform")
         if platform is None:
-            # Shared server — include everywhere
             filtered[name] = cfg
         elif platform == agent_value:
             filtered[name] = cfg
-        # else: server belongs to a different agent, skip
+
     return filtered
 
 
@@ -67,7 +66,6 @@ def deploy_mcp(
         print(f"Failed to parse rendered template as JSON: {e}")
         return False
 
-    # Deploy to the primary (Cline) target
     target_path.parent.mkdir(parents=True, exist_ok=True)
     target_path.write_text(
         json.dumps(raw, indent=2, ensure_ascii=False) + "\n",
@@ -75,7 +73,6 @@ def deploy_mcp(
     )
     print(f"Deployed MCP config to {target_path}")
 
-    # Deploy to agent-specific targets
     if agent_targets:
         servers = raw.get("mcpServers", {})
 

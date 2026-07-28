@@ -3,7 +3,9 @@ skills:
   - mattpocock/skills/tdd
   - mattpocock/skills/diagnosing-bugs
   - mattpocock/skills/triage
-  - mattpocock/skills/to-issues
+  - mattpocock/skills/to-tickets
+  - mattpocock/skills/to-spec
+  - mattpocock/skills/code-review
   - obra/superpowers/test-driven-development
   - obra/superpowers/subagent-driven-development
   - juliusbrussee/caveman/caveman-review
