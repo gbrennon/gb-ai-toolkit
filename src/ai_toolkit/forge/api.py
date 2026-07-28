@@ -1,26 +1,104 @@
 import json
 import os
+import re
 import subprocess
 import sys
 from urllib.parse import urlparse
 
 
-def get_remote_host() -> str | None:
+def get_main_remote() -> str | None:
+    remote = os.environ.get("REMOTE")
+    if remote:
+        return remote
+
+    result = subprocess.run(
+        ["git", "rev-parse", "--abbrev-ref", "--symbolic-full-name", "@{u}"],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if result.returncode == 0:
+        remote = result.stdout.strip().split("/")[0]
+        if remote:
+            return remote
+
     result = subprocess.run(
         ["git", "remote", "get-url", "origin"],
         capture_output=True,
         text=True,
         check=False,
     )
+    if result.returncode == 0:
+        return "origin"
+
+    result = subprocess.run(
+        ["git", "remote"],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if result.returncode == 0:
+        remotes = result.stdout.strip().splitlines()
+        if remotes:
+            return remotes[0]
+
+    return None
+
+
+def get_remote_url(remote: str | None = None) -> str | None:
+    if remote is None:
+        remote = get_main_remote()
+    if remote is None:
+        return None
+    result = subprocess.run(
+        ["git", "remote", "get-url", remote],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
     if result.returncode != 0:
         return None
-    url = result.stdout.strip()
+    return result.stdout.strip()
+
+
+def _extract_host(url: str) -> str | None:
     parsed = urlparse(url)
     if parsed.hostname:
         return parsed.hostname
     if ":" in url:
         return url.split(":")[0].split("@")[-1]
     return None
+
+
+def get_remote_host() -> str | None:
+    url = get_remote_url()
+    if url is None:
+        return None
+    return _extract_host(url)
+
+
+FORGE_PATTERNS: dict[str, list[re.Pattern]] = {
+    "github": [re.compile(r"github\.", re.I)],
+    "gitlab": [re.compile(r"gitlab[\-\.]", re.I), re.compile(r"\.gitlab\.", re.I)],
+    "bitbucket": [re.compile(r"bitbucket\.", re.I)],
+    "codeberg": [re.compile(r"codeberg\.", re.I)],
+    "gitea": [re.compile(r"gitea\.", re.I)],
+}
+
+
+def classify_forge(host: str) -> str:
+    for forge, patterns in FORGE_PATTERNS.items():
+        for pat in patterns:
+            if pat.search(host):
+                return forge
+    return "unknown"
+
+
+def detect_forge() -> str | None:
+    host = get_remote_host()
+    if not host:
+        return None
+    return classify_forge(host)
 
 
 def parse_remote_ref(
