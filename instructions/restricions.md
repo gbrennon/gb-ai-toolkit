@@ -10,8 +10,10 @@
 ## Never do
 
 - Never instantiate infrastructure dependencies directly inside domain or application services.
+- Never skip git hooks
 - Never skip or mock out tests to make code pass faster.
 - Never mock dependency in infrastructure or presentation layers.
+- Never mock external dependencies. Don't mock what you don't own.
 - Never produce untestable code (hidden static dependencies, `new` inside business logic,
   global mutable state).
 - Never use God classes, God functions, anti-patterns or principle violations.

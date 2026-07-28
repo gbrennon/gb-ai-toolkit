@@ -17,9 +17,14 @@ The user supplies PR review findings — inline comments, a review summary, or a
 uv run fetch-pr-review <PR-URL | owner/repo/number>
 ```
 
-The script auto-detects the forge from the remote URL:
-- **GitHub** → uses `gh api`
-- **Forgejo/Gitea** (Codeberg, self-hosted, etc.) → uses the Forgejo REST API via `curl`. Set `FORGEJO_TOKEN` or `FJ_TOKEN` env var for private repos (public repos work without auth).
+`fetch-pr-review` auto-detects the forge from the remote URL — run `uv run forge-detect` first if you need to know which forge ahead of time. Detection logic (via script, not manual reasoning):
+
+| Forge | Backend |
+|-------|---------|
+| GitHub | `gh api` |
+| GitLab | `glab api` (future) |
+| Bitbucket | `bb api` (future) |
+| Forgejo/Gitea (Codeberg, self-hosted) | Forgejo REST API via `curl` + `FORGEJO_TOKEN`/`FJ_TOKEN` |
 
 Outputs every review summary and inline comment as structured markdown with the reviewer, file path, and line number.
 

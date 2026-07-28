@@ -1,11 +1,11 @@
 ---
 name: qa
-description: Interactive QA session where user reports bugs or issues conversationally, and the agent files GitHub issues. Explores the codebase in the background for context and domain language. Use when user wants to report bugs, do QA, file issues conversationally, or mentions "QA session".
+description: Interactive QA session where user reports bugs or issues conversationally, and the agent files forge issues. Explores the codebase in the background for context and domain language. Use when user wants to report bugs, do QA, file issues conversationally, or mentions "QA session".
 ---
 
 # QA Session
 
-Run an interactive QA session. The user describes problems they're encountering. You clarify, explore the codebase for context, and file GitHub issues that are durable, user-focused, and use the project's domain language.
+Run an interactive QA session. The user describes problems they're encountering. You clarify, explore the codebase for context, and file forge issues that are durable, user-focused, and use the project's domain language.
 
 ## For each issue the user raises
 
@@ -44,7 +44,11 @@ Keep as a single issue when:
 - It's one behavior that's wrong in one place
 - The symptoms are all caused by the same root behavior
 
-### 4. File the GitHub issue(s)
+### 4. Detect the forge
+
+Run `uv run forge-detect` to determine which forge this repo uses (github, gitlab, bitbucket, codeberg, gitea, etc.). This tells you the correct API and workflow for the operations below.
+
+### 5. File the forge issue(s)
 
 Create issues with `uv run forge-issue create <owner/repo> "<title>"` (body from stdin). Do NOT ask the user to review first — just file and share URLs.
 
@@ -125,6 +129,6 @@ When creating a breakdown:
 
 After filing, print all issue URLs (with blocking relationships summarized) and ask: "Next issue, or are we done?"
 
-### 5. Continue the session
+### 6. Continue the session
 
 Keep going until the user says they're done. Each issue is independent — don't batch them.

@@ -12,6 +12,10 @@ Both axes run as **parallel sub-agents** so they don't pollute each other's cont
 
 ## Process
 
+### 0. Detect the forge
+
+Run `uv run forge-detect` to learn which forge this repo uses (github, gitlab, bitbucket, codeberg, gitea). All forge operations below auto-detect from the remote URL.
+
 ### 1. Identify the spec source
 
 1. Issue references in the commit messages — fetch via `uv run forge-issue view <ref>`.

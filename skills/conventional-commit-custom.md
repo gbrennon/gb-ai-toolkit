@@ -1,9 +1,15 @@
 ---
-name: conventional-commit
-description: Create conventional commits separated by logical group or file. Prevents large multi-change commits by enforcing per-file or per-logical-group boundaries.
+name: conventional-commit-custom
+description: Create conventional commits separated by logical group or file. Prevents large multi-change commits by enforcing per-file or per-logical-group boundaries. Never skips git hooks unless explicitly requested.
 ---
 
 Create commits grouped by logical area using the Conventional Commits format. Never lump unrelated changes into a single commit.
+
+## Git hooks
+
+Never pass `--no-verify`, `-n`, or any flag that bypasses git hooks when committing. Hooks enforce quality — skipping them hides failures.
+
+Only use `--no-verify` if the user explicitly states "skip hooks" or "bypass hooks". Never infer implicit consent from user impatience or prior hook failures. If hooks fail, report the failure and fix it — do not bypass.
 
 ## Process
 
@@ -33,7 +39,6 @@ Walk through every changed file and group them by logical concern:
 - Different concerns (e.g. a feature + unrelated refactor) -> separate commits
 - Documentation changes -> separate `docs` commit
 - Test-only changes -> separate `test` commit
-
 
 ### 3. Verify changes pass checks
 
@@ -71,6 +76,8 @@ For each proposed commit include: type, scope, subject line, and a brief note of
 ### 5. Commit each group
 
 Commit each group separately using `git commit` with the Conventional Commits format. Stage only the files for the current group before each commit.
+
+Do not pass `--no-verify` or `-n` unless the user explicitly requested hook bypass.
 
 ## Commit Format
 

@@ -12,6 +12,10 @@ The issue tracker and triage label vocabulary should have been provided to you â
 
 ## Process
 
+### 0. Detect the forge
+
+Run `uv run forge-detect` to learn which forge this repo uses. All forge operations below auto-detect from the remote URL.
+
 ### 1. Gather context
 
 Work from whatever is already in the conversation context. If the user passes a reference (a spec path, an issue number or URL) as an argument, fetch it via `uv run forge-issue view <ref>` and read its full body and comments.
