@@ -1,17 +1,70 @@
 # General Purpose Noise Exclusions
 
-Exclude build artifacts, cache directories, dependency caches, and generated files that clutter context and waste tokens. Covers general, Python, and OS-level patterns.
+Exclude build artifacts, cache directories, dependency caches, generated files, and OS-level noise that clutter context and waste tokens. These patterns are language-agnostic; language-specific excludes live in per-project rules.
 
 ## Patterns to Always Ignore
 
-### General Build and CI/CD
-- `.git/`
-- `.github/workflows/`
-- `.gitlab-ci/`
-- `.circleci/`
+### Build Output Directories
 - `build/`
 - `dist/`
 - `out/`
+- `bin/`
+- `obj/`
+- `lib/`
+- `release/`
+- `debug/`
+- `target/`
+- `coverage/`
+- `artifacts/`
+
+### Compiled Bytecode and Object Files
+- `*.class`
+- `*.pyc`
+- `*.pyo`
+- `*.o`
+- `*.obj`
+- `*.a`
+- `*.lib`
+- `*.so`
+- `*.dylib`
+- `*.dll`
+
+### Compiled Artifacts (JARs, Bundles, Binaries)
+- `*.jar`
+- `*.war`
+- `*.ear`
+- `*.gem`
+- `*.rpm`
+- `*.deb`
+- `*.tgz` (packaged outputs only)
+
+### Package Manager Caches
+- `node_modules/`
+- `vendor/`
+- `.npm/`
+- `.pnpm-store/`
+- `.yarn/`
+- `bower_components/`
+- `.gradle/`
+- `.m2/` (partial — keep only dependency cache, not source)
+- `.bundle/`
+- `Pods/`
+- `.cargo/`
+
+### Dependency and Lockfile Artifacts
+- `*.lock` (dependency lockfiles unless required for reproducibility)
+- `vendor/bundle/`
+- `.nuget/`
+
+### Test and Coverage Caches
+- `.pytest_cache/`
+- `.coverage`
+- `htmlcov/`
+- `.tox/`
+- `.mypy_cache/`
+- `.nyc_output/`
+- `tmp/`
+- `test-results/`
 
 ### IDE and Editor
 - `.vscode/`
@@ -19,10 +72,9 @@ Exclude build artifacts, cache directories, dependency caches, and generated fil
 - `*.swp`
 - `*.swo`
 - `*~`
-- `.DS_Store`
-- `Thumbs.db`
 - `.project`
 - `.classpath`
+- `.settings/`
 
 ### Logs and Temporary
 - `*.log`
@@ -38,60 +90,16 @@ Exclude build artifacts, cache directories, dependency caches, and generated fil
 - `.AppleDouble/`
 - `.LSOverride`
 
-### Container and VM
-- `Dockerfile.build`
-- `.dockerignore`
-- `.vagrant/`
-
-### Python Cache and Bytecode
-- `__pycache__/`
-- `*.pyc`
-- `*.pyo`
-- `*.pyd`
-- `.Python`
-
-### Python Distribution and Build
-- `*.egg-info/`
-- `*.egg/`
-- `.eggs/`
-- `sdist/`
-- `wheel/`
-
-### Python Test and Coverage
-- `.pytest_cache/`
-- `.coverage`
-- `htmlcov/`
-- `.tox/`
-- `cover/`
-
-### Python Linting and Type Checking
-- `.mypy_cache/`
-- `.ruff_cache/`
-- `.pylint_cache/`
-- `.pytype/`
-
-### Python Virtual Environments
-- `venv/`
+### Environment and Local Configuration
+- `.env`
+- `.env.*`
+- `!.env.example`
 - `.venv/`
+- `venv/`
 - `env/`
-- `.env/`
+
+### Virtual Environments (language-agnostic)
+- `.venv/`
+- `venv/`
 - `ENV/`
-- `.ENV/`
-- `virtualenv/`
-
-### Python Package Managers
-- `*.lock` (Pipenv, Poetry)
-- `Pipfile.lock`
-- `poetry.lock`
-- `pip-log.txt`
-- `pip-delete-this-directory.txt`
-
-### Python IDE and Development
-- `.ipynb_checkpoints/`
-- `.jupyter/`
-- `*.ipynb`
-- `.spyproject/`
-- `.ropeproject/`
-- `*.pot`
-- `instance/`
-- `.webassets-cache`
+- `__pypackages__/`

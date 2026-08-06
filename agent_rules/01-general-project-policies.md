@@ -11,7 +11,7 @@ Project-agnostic guidelines for context management and file handling.
 - `ARCHITECTURE.md` — design documentation
 - `.github/workflows/*.yml` — CI/CD pipeline definitions (not logs)
 - `Makefile`, `justfile`, `Taskfile` — build tasks
-- `pyproject.toml`, `Cargo.toml`, `go.mod`, `package.json` — dependency manifests
+- `pyproject.toml`, `Cargo.toml`, `go.mod`, `package.json`, `Gemfile`, `pom.xml` — dependency manifests
 - `.env.example` — configuration reference (not secrets)
 - `docker-compose.yml`, `Dockerfile` — deployment configuration
 
@@ -20,7 +20,7 @@ Project-agnostic guidelines for context management and file handling.
 - Dependency caches (`node_modules/`, `venv/`, `vendor/`, `target/`)
 - Lock files (often 1–5MB each: `package-lock.json`, `yarn.lock`, `Cargo.lock`)
 - IDE metadata (`.vscode/`, `.idea/`)
-- Build artifacts (`build/`, `dist/`, `out/`)
+- Build artifacts (`build/`, `dist/`, `out/`, `target/`)
 - Log files (`*.log`)
 - Temporary files (`tmp/`, `temp/`, `.tmp/`)
 
@@ -29,7 +29,7 @@ Project-agnostic guidelines for context management and file handling.
 ### When asked "explain this project"
 1. Read `README.md` or `ARCHITECTURE.md` first
 2. Map hexagonal/DDD layers: `domain/`, `application/`, `infrastructure/`, `presentation/`
-3. Identify entry point (`main.py`, `__main__.py`, `lib.rs`, etc.)
+3. Identify entry point (`main.py`, `lib.rs`, `main.go`, `Application.java`, etc.)
 4. Trace one happy path through the codebase
 5. Do NOT read all files — focus on structure and key abstractions
 
@@ -72,7 +72,7 @@ Rules use `.gitignore`-style patterns:
 - `tests/unit/` — unit tests (domain, application)
 - `tests/integration/` — integration tests (infrastructure)
 - `tests/e2e/` — end-to-end tests (presentation)
-- Avoid `test_*.py` or `*_test.py` scattered in source tree
+- Avoid `test_*` or `*_test` files scattered in source tree — keep tests under the test directories
 
 ## Hexagonal Architecture Validation
 
@@ -92,10 +92,10 @@ When reviewing a project, validate:
 
 Rules load in order:
 1. `00-global-noise-exclusions.md` (universal patterns)
-2. `01-python-language-specific.md` (Python only)
-3. `02-project-overrides.md` (per-project exceptions)
+2. Language-specific rules (e.g., `lang-python.md`, `lang-rust.md`, if the project adds them)
+3. Project overrides (per-project exceptions)
 
-**To extend:** Create `02-project-overrides.md` in the rules directory.
+**To extend:** Create a language-specific or project-override rules file in the rules directory.
 
 ## Performance Tips
 

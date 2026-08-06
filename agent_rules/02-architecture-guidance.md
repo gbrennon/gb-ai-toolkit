@@ -13,7 +13,7 @@ Enforce architectural decisions and prevent structural drift. These rules apply 
 ### Module-Like Files Are Forbidden
 - Never create "module" files that re-export unrelated symbols from different subsystems just for convenience
 - Never create "barrel" files that aggregate public APIs from across layers — each layer manages its own public surface
-- A `__init__.py` may re-export only the symbols that form the immediate package's public contract, and only from within that same package
+- Package initializers, like `__init__.py`, `mod.rs`, `package-info.java`, and other entry-module files, should ONLY re-export without logic. Re-export only the symbols that form the immediate package's public contract, and only from within that same package
 
 ## Ports and Adapters (Hexagonal Architecture)
 
@@ -60,8 +60,8 @@ Enforce architectural decisions and prevent structural drift. These rules apply 
 When reviewing or writing code, treat these as violations:
 
 - A file containing both an interface and an unrelated helper function — split them
-- A domain service importing `requests`, `sqlalchemy`, `boto3`, or any I/O library — move that logic to an adapter
-- A `__init__.py` re-exporting symbols from a different top-level package — remove the cross-layer dependency
+- A domain service importing `requests`, `sqlalchemy`, `boto3`, `axios`, `jackson`, or any I/O library — move that logic to an adapter
+- A `__init__.py`, `mod.rs`, or package initializer re-exporting symbols from a different top-level package — remove the cross-layer dependency
 - A class with more than one responsibility or more than ~7 public methods — decompose it
 - A function that mixes domain rules with infrastructure calls — extract the infrastructure behind a port
 - Inheritance used to share utility code rather than to model a true subtype relationship — refactor to composition
