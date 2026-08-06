@@ -30,4 +30,4 @@ Write a docstring that explains the **behavior** — how the implementation fulf
 - Why this approach was chosen (if non-obvious)
 
 ### Format
-Use the project's standard docstring format (reStructuredText, Google, NumPy, or plain — follow what the codebase already uses).
+Use the project's standard documentation format (JSDoc, Google/reStructuredText/NumPy in Python, `///` doc comments in Rust, JavaDoc, or plain — follow what the codebase already uses).
