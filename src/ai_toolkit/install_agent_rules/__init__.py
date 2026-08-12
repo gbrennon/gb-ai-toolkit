@@ -9,6 +9,7 @@ from ai_toolkit.install_agent_rules.parsing.compose_rules import (
 )
 from ai_toolkit.install_agent_rules.installers.install_agent_rules import (
     install_agent_rules,
+    read_target_paths,
 )
 from ai_toolkit.install_agent_rules.main import main
 
@@ -19,5 +20,6 @@ __all__ = [
     "compose_rules_content",
     "compose_rules_to_file",
     "install_agent_rules",
+    "read_target_paths",
     "main",
 ]

@@ -38,6 +38,25 @@ class TestPersistToGlobal:
 
 class TestMainCli:
     @pytest.mark.integration
+    def test_with_source_and_targets_file_then_composes(self, tmp_path: Path) -> None:
+        rules_dir = tmp_path / "rules.d"
+        rules_dir.mkdir()
+        (rules_dir / "00-base.md").write_text("# Base")
+        targets_file = tmp_path / "targets.txt"
+        target = tmp_path / "AGENTS.md"
+        targets_file.write_text(str(target) + "\n")
+        rc = main(
+            [
+                "--source",
+                str(rules_dir),
+                "--targets-file",
+                str(targets_file),
+            ]
+        )
+        assert rc == 0
+        assert target.is_file()
+
+    @pytest.mark.integration
     def test_with_source_and_target_then_composes(self, tmp_path: Path) -> None:
         rules_dir = tmp_path / "rules.d"
         rules_dir.mkdir()

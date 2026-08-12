@@ -23,7 +23,7 @@ install-mcp:  ## Install & deploy MCP servers
 install-skills:  ## Install skills
 	$(UV) run install-skills
 
-install-agent-rules:  ## Compose agent_rules/ into ~/.agents/AGENT.md
+install-agent-rules:  ## Compose agent_rules/ into manifest-listed AGENTS.md targets
 	$(UV) run install-agent-rules
 
 install-omp-commands:  ## Install OMP Cline auth commands & scripts

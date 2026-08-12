@@ -3,7 +3,7 @@ import sys
 from pathlib import Path
 
 from ai_toolkit.install_agent_rules.installers.install_agent_rules import (
-    AGENT_RULES_TARGET,
+    AGENT_TARGETS_FILE,
     install_agent_rules,
 )
 from ai_toolkit.install_agent_rules.parsing.load_rules_dir import read_rules_dir
@@ -29,7 +29,7 @@ def _persist_to_global(source: Path, global_dir: Path | None = None) -> int:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
-        description="Compose and install agent rules into AGENT.md",
+        description="Compose and install agent rules into AGENTS.md targets",
     )
     parser.add_argument(
         "--source",
@@ -38,10 +38,19 @@ def main(argv: list[str] | None = None) -> int:
         help=f"Source rules.d directory (default: {_DEV_RULES_DIR})",
     )
     parser.add_argument(
+        "--targets-file",
+        type=Path,
+        default=AGENT_TARGETS_FILE,
+        help=(
+            "File listing destination paths (one per line) to populate with "
+            f"composed rules (default: {AGENT_TARGETS_FILE})"
+        ),
+    )
+    parser.add_argument(
         "--target",
         type=Path,
-        default=AGENT_RULES_TARGET,
-        help=f"Target AGENT.md path (default: {AGENT_RULES_TARGET})",
+        default=None,
+        help="Additional single destination path to populate (optional)",
     )
     parser.add_argument(
         "--persist",
@@ -57,7 +66,11 @@ def main(argv: list[str] | None = None) -> int:
             return ret
         source = _GLOBAL_RULES_DIR
 
-    return install_agent_rules(source_dir=source, target_path=args.target)
+    return install_agent_rules(
+        source_dir=source,
+        targets_file=args.targets_file,
+        target_path=args.target,
+    )
 
 
 if __name__ == "__main__":
