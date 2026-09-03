@@ -20,6 +20,7 @@ make install               # install both
 | `make setup` | Install dependencies (`uv sync`) |
 | `make install-mcp` | Install MCP servers from `mcp/mcp.json` and deploy to all agents |
 | `make install-skills` | Install skills |
+| `make install-agent-rules` | Compose `agent_rules/` into every AGENTS.md target listed in the manifest |
 | `make install` | Install everything (mcp + skills) |
 | `make deploy-mcp` | Same as `install-mcp` — install + deploy to all agents |
 | `make test` | Run all tests |
@@ -77,3 +78,4 @@ The `mcp/mcp.json` template uses Jinja2 expressions — missing variables fall b
 |----------|-------------|
 | [docs/mcp-servers.md](docs/mcp-servers.md) | Full MCP server config reference: fields, deployment, platform scoping |
 | [docs/adding-agent-platforms.md](docs/adding-agent-platforms.md) | Step-by-step guide to add a new agent platform |
+| [docs/authoring-agent-rules.md](docs/authoring-agent-rules.md) | How to add and improve the rule files composed into AGENTS.md |
