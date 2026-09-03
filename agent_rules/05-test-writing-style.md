@@ -12,8 +12,10 @@ Test should assert what tested code returns in a given scenario and not if it ca
 
 ### Testing rules
 
-Tests don't have logic. They should be simple.
+If you are going to modificate behavior you should write test first.
+Tests shouldn't have logic. They should be simple.
 Test should excercise code in all possible scenarios.
-When writing unit tests you can mock injectable dependencies but not in code that have external dependencies.
+When writing unit tests you can mock injectable dependencies but in code that have external dependencies you should write integration tests that use fake classes to represent interaction.
 Don't mock what you don't own, you should write integration test and inject fake classes that cover a single scenario per class.
-If you have to simulate a scenarioo in which HTTP response contains 400 status code you should have a stub class to have a fake scenario that cover this.
+If you have to simulate a scenarioo in which HTTP response contains 400 status code you should have a stub class to have a fake/stub class for that scenario that cover this.
+Keep test rule high
