@@ -32,7 +32,7 @@ install-omp-commands:  ## Install OMP Cline auth commands & scripts
 install-provider-blocks:  ## Block OpenAI & Anthropic access on OMP + Cline
 	$(UV) run install-provider-blocks
 
-install: install-mcp install-skills install-agent-rules install-omp-commands install-provider-blocks  ## Run all install targets
+install: install-skills install-agent-rules install-omp-commands install-provider-blocks  ## Run all install targets
 
 # ── Pi Config ────────────────────────────────────────────────────────────────
 install-pi-config:  ## Sync CLINE_API_KEY from .env into Pi + OpenCode
