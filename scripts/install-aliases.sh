@@ -12,6 +12,7 @@ cat > "$ALIAS_FILE" << 'EOF'
 alias ai-mcp='install-mcp-servers'
 alias ai-skills='install-skills'
 alias ai-tookit='ai-toolkit'
+alias ai-quality='check-code-quality'
 
 # systemd user service shortcuts
 alias ai-mcp-status='systemctl --user status ai-mcp-servers.service'

@@ -32,7 +32,12 @@ install-omp-commands:  ## Install OMP Cline auth commands & scripts
 install-provider-blocks:  ## Block OpenAI & Anthropic access on OMP + Cline
 	$(UV) run install-provider-blocks
 
-install: install-skills install-agent-rules install-omp-commands install-provider-blocks  ## Run all install targets
+install-quality-cli:  ## Install check-code-quality CLI to ~/.local/bin and rules to ~/.config/ai-toolkit/semgrep
+	mkdir -p $(HOME)/.local/bin $(HOME)/.config/ai-toolkit/semgrep
+	install -m 755 scripts/check-code-quality.sh $(HOME)/.local/bin/check-code-quality
+	cp -r rules/semgrep/* $(HOME)/.config/ai-toolkit/semgrep/
+
+install: install-skills install-agent-rules install-omp-commands install-provider-blocks install-quality-cli  ## Run all install targets
 
 # ── Pi Config ────────────────────────────────────────────────────────────────
 install-pi-config:  ## Sync CLINE_API_KEY from .env into Pi + OpenCode

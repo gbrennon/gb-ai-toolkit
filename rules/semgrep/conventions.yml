@@ -1,0 +1,58 @@
+rules:
+  - id: rust-avoid-public-tuple-structs
+    languages:
+      - rust
+    message: "Public tuple structs are not allowed"
+    severity: ERROR
+    patterns:
+      - pattern-regex: "(?m)^\\s*pub\\s+struct\\s+[A-Za-z0-9_]+(?:\\s*<[^>]+>)?\\s*\\([^)]*\\)\\s*;"
+
+  - id: rust-avoid-public-unit-structs
+    languages:
+      - rust
+    message: "Public unit structs are not allowed"
+    severity: ERROR
+    patterns:
+      - pattern-regex: "(?m)^\\s*pub\\s+struct\\s+[A-Za-z0-9_]+(?:\\s*<[^>]+>)?\\s*;"
+
+  - id: rust-struct-fields-must-not-be-public
+    languages:
+      - rust
+    message: "Struct fields must not be public"
+    severity: ERROR
+    patterns:
+      - pattern-inside: |
+          struct $NAME {
+            ...
+          }
+      - pattern-regex: "pub\\s+[A-Za-z0-9_]+\\s*:"
+
+  - id: rust-no-inline-modules
+    languages:
+      - rust
+    message: "Inline modules are not allowed; use a separate module file"
+    severity: ERROR
+    patterns:
+      - pattern-regex: "(?m)^\\s*(?:pub(?:\\([^)]+\\))?\\s+)?mod\\s+[A-Za-z0-9_]+\\s*\\{"
+
+  - id: rust-no-setters
+    languages:
+      - rust
+    message: "Setters are not allowed; expose behavior instead"
+    severity: ERROR
+    patterns:
+      - pattern-either:
+          - pattern: fn $FN(...) { ... }
+          - pattern: pub fn $FN(...) { ... }
+          - pattern: pub(crate) fn $FN(...) { ... }
+      - metavariable-regex:
+          metavariable: $FN
+          regex: "^set_"
+
+  - id: rust-no-allow-attribute
+    languages:
+      - rust
+    message: "Do not use #[allow(...)] to suppress warnings; fix the root cause instead"
+    severity: ERROR
+    patterns:
+      - pattern-regex: '(?m)^\s*#!?\[allow\([^)]+\)\]'
