@@ -58,3 +58,31 @@ class TestNpxSkillInstaller:
             installer.install(skill)
             cmd = mock_run.call_args[0][0]
             assert cmd[0] == "/custom/npx"
+
+    @pytest.mark.unit
+    def test_npx_install_when_skill_in_subdirectory_then_extracts_basename(
+        self,
+    ) -> None:
+        with patch("ai_toolkit.shared_kernel.shell.subprocess.run") as mock_run:
+            mock_run.return_value.returncode = 0
+            installer = NpxSkillInstaller()
+            skill = SkillDef(
+                name="engineering/improve-codebase-architecture",
+                source="https://github.com/owner/repo",
+            )
+            result = installer.install(skill)
+            assert result is True
+            mock_run.assert_called_once_with(
+                [
+                    "npx",
+                    "skills",
+                    "add",
+                    "https://github.com/owner/repo",
+                    "--skill",
+                    "improve-codebase-architecture",
+                    "-g",
+                    "-y",
+                ],
+                check=False,
+                stdin=subprocess.DEVNULL,
+            )

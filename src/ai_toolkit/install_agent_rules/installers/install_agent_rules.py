@@ -20,6 +20,7 @@ _DEFAULT_TARGETS_TEMPLATE = """\
 ~/.config/opencode/AGENTS.md
 ~/.omp/agent/AGENTS.md
 ~/.config/antigravity/AGENTS.md
+~/.pi/agent/AGENTS.md
 """
 
 

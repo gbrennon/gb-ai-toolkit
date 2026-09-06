@@ -39,6 +39,12 @@ def run_detect_json(repo_dir: Path) -> dict:
 
 @pytest.mark.integration
 class TestForgeDetectIntegration:
+    @pytest.fixture(autouse=True)
+    def clean_git_env(self, monkeypatch: pytest.MonkeyPatch) -> None:
+        for key in list(os.environ.keys()):
+            if key.startswith("GIT_"):
+                monkeypatch.delenv(key, raising=False)
+
     def test_github_https(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             repo = Path(tmp)

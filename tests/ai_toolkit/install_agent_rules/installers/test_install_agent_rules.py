@@ -103,8 +103,9 @@ class TestInstallAgentRules:
         manifest = tmp_path / "template.txt"
         manifest.write_text(_DEFAULT_TARGETS_TEMPLATE, encoding="utf-8")
         paths = read_target_paths(manifest)
-        assert len(paths) == 4
+        assert len(paths) == 5
         assert str(paths[0]) == str(Path.home() / ".agents" / "AGENTS.md")
+        assert str(paths[4]) == str(Path.home() / ".pi" / "agent" / "AGENTS.md")
 
     @pytest.mark.integration
     def test_install_seeds_default_manifest_when_missing(
