@@ -5,7 +5,7 @@ from typing import Any, Self
 
 PI_SETTINGS: Path = Path.home() / ".pi" / "agent" / "settings.json"
 HOOK_PACKAGE: str = "@hsingjui/pi-hooks"
-HOOK_CMD: str = "check-code-quality 2>&1 | head -120"
+HOOK_CMD: str = "check-modified-code-quality"
 HOOK_MATCHER: str = "write|edit"
 
 CODE_EXTENSIONS: tuple[str, ...] = (
