@@ -32,7 +32,8 @@ class TestPiHooksInstaller:
         }
         assert conditions == expected_conditions
         assert all(
-            hook["type"] == "command" and hook["command"] == HOOK_CMD
+            hook["type"] == "command"
+            and hook["command"] == "check-modified-code-quality"
             for hook in hooks
         )
         assert HOOK_PACKAGE in data["packages"]
