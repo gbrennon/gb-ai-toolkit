@@ -112,4 +112,4 @@ def test_install_cline_rules_moves_current_rule_files(tmp_path: Path) -> None:
 
     assert result.returncode == 0
     for name in ("00-global-noise-exclusions.md", "01-general-project-policies.md", "02-architecture-guidance.md"):
-        assert (tmp_path / ".cline/rules" / name).read_text(encoding="ascii") == name
+        assert (tmp_path / "home/.cline/rules" / name).read_text(encoding="ascii") == name
